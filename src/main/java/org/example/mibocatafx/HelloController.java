@@ -17,23 +17,27 @@ public class HelloController {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
 
-//    @FXML
-//    private Button loginButton;
-//    private TextField userInput;
-//    private PasswordField passwField;
-//
-//    @FXML
-//    protected void onLoginButtonClick() {
-//        String validUserMail = "user@gmail.com";
-//        String validUserPassword = "1234";
-//
-//        String userMail = userInput.getText();
-//        String userPassword = passwField.getText();
-//
-//        if (userMail.equals(validUserMail) && userPassword.equals(validUserPassword)) {
-//            System.out.println("Loged");
-//        } else {
-//            System.exit(-1);
-//        }
-//    }
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    private TextField userInput;
+
+    @FXML
+    private PasswordField passField;
+
+    @FXML
+    protected void onLoginButtonClick() {
+        String validUserMail = "user@gmail.com";
+        String validUserPassword = "1234";
+
+        String userMail = userInput.getText();
+        String userPassword = passField.getText();
+
+        if (userMail.equals(validUserMail) && userPassword.equals(validUserPassword)) {
+            System.out.println("Loged");
+        } else {
+            System.exit(-1);
+        }
+    }
 }
