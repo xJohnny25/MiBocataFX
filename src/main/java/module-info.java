@@ -5,4 +5,6 @@ module org.example.mibocatafx {
 
     opens org.example.mibocatafx to javafx.fxml;
     exports org.example.mibocatafx;
+    exports controllers;
+    opens controllers to javafx.fxml;
 }
