@@ -29,7 +29,7 @@
       </ImageView>
       <Label stylesheets="@../css/styles.css" text="INICIAR SESIÓN">
          <font>
-            <Font name="Poppins Medium" size="18.0" />
+            <Font name="Poppins Medium" size="22.0" />
          </font>
       </Label>
       <VBox alignment="CENTER" prefHeight="431.0" prefWidth="390.0" style="-fx-background-radius: 6; -fx-background-color: white;">
