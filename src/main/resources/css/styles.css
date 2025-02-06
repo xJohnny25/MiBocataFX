@@ -7,3 +7,9 @@
 * {
     -fx-font-family: 'poppins';
 }
+
+.hbox-background {
+    -fx-background-image: url("/assets/sandwich-background.jpg");
+    -fx-background-size: cover;  /* Ajusta la imagen al tamaño del HBox */
+    -fx-background-position: center;
+}

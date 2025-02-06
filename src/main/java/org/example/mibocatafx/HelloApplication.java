@@ -12,6 +12,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/loginScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+
         stage.setTitle("Login - Bocadillos");
         stage.setMaximized(true);
         stage.setScene(scene);

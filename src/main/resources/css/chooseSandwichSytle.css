@@ -1,3 +1,5 @@
-VBox VBox {
-    border-bottom: 2px solid black;
+.root {
+    -fx-background-image: url("/assets/paredblanca.png");
+    -fx-background-size: cover;  /* Ajusta la imagen */
+    -fx-background-position: center center;
 }
