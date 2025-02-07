@@ -41,6 +41,8 @@ public class LoginController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
+        scene.getStylesheets().add(getClass().getResource("/css/chooseSandwichStyle.css").toExternalForm());
+
         Stage stage = new Stage();
         stage.setTitle("Selección Bocadillo");
         stage.setMaximized(true);

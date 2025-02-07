@@ -1,15 +1,14 @@
 @font-face {
-    font-family: 'poppins';
+    font-family: "poppins";
     src: url("../fonts/poppins.ttf");
-
 }
 
 * {
-    -fx-font-family: 'poppins';
+    -fx-font-family: "poppins";
 }
 
-.hbox-background {
-    -fx-background-image: url("/assets/sandwich-background.jpg");
-    -fx-background-size: cover;  /* Ajusta la imagen al tamaño del HBox */
+#hbox-background {
+    -fx-background-image: url("../assets/sandwichbackground.jpg");
+    -fx-background-size: cover;
     -fx-background-position: center;
 }

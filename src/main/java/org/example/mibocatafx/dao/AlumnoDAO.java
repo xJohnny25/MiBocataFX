@@ -7,12 +7,12 @@ import org.hibernate.Transaction;
 import java.util.List;
 
 public class AlumnoDAO {
-    Session session = HibernateConnection.getSession();
-    Transaction tx = null;
-
-    public List getById(int id) {
-        return session.createQuery("from Alumno a where a.id = id").getResultList();
-    }
-
+//    Session session = HibernateConnection.getSession();
+//    Transaction tx = null;
+//
+//    public List getById(int id) {
+//        return session.createQuery("from Alumno a where a.id = id").getResultList();
+//    }
+//
 
 }
