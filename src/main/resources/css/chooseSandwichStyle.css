@@ -1,15 +1,8 @@
 @font-face {
-    -fx-font-family: "poppins";
-    src: url("fonts/poppins.ttf");
+    -fx-font-family: "Poppins";
+    src: url("/fonts/poppins.ttf");
 }
 
 * {
-    -fx-font-family: "poppins";
-}
-
-#backgroundPane {
-    -fx-background-image: url("/assets/paredblanca.png");
-    -fx-background-size: cover;  /* Ajusta la imagen */
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center center;
+    -fx-font-family: "Poppins";
 }
