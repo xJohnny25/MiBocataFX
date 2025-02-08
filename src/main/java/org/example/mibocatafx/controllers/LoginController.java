@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.mibocatafx.HelloApplication;
+import org.example.mibocatafx.service.AlumnoService;
 
 import java.io.IOException;
 
@@ -19,20 +20,15 @@ public class LoginController {
 
     @FXML
     protected void onLoginButtonClick() {
-        String validUserMail = "user@gmail.com";
-        String validUserPassword = "1234";
+       AlumnoService alumnoService = new AlumnoService();
 
         String userMail = userInput.getText();
         String userPassword = passField.getText();
 
-        if (userMail.equals(validUserMail) && userPassword.equals(validUserPassword)) {
-            try {
-                abrirVentana();
-            } catch (IOException e) {
-                System.out.println("Error al entrar");
-            }
-        } else {
-            System.exit(-1);
+        try {
+            abrirVentana();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -41,7 +37,7 @@ public class LoginController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
-        scene.getStylesheets().add(getClass().getResource("/css/chooseSandwichStyle.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
 
         Stage stage = new Stage();
         stage.setTitle("Selección Bocadillo");

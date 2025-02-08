@@ -1,8 +1,12 @@
 @font-face {
     -fx-font-family: "Poppins";
-    src: url("/fonts/poppins.ttf");
+    src: url("../fonts/poppins.ttf");
 }
 
 * {
     -fx-font-family: "Poppins";
+}
+
+#orderButton:hover {
+    -fx-background-color: red;
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <Pane prefHeight="64.0" prefWidth="520.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
          <padding>
@@ -24,7 +24,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" layoutX="397.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" spacing="30.0">
+            <HBox alignment="CENTER" layoutX="1717.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" spacing="30.0">
                <children>
                   <VBox alignment="CENTER" spacing="5.0">
                      <children>
@@ -75,8 +75,8 @@
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
-         <Pane style="-fx-border-color: #d9d9d9d9; -fx-border-width: 0px 1px 0px 0px;">
-            <Pane layoutX="44.0" layoutY="48.0" prefHeight="227.0" prefWidth="213.0" style="-fx-border-color: #25A4F4; -fx-border-radius: 10px; -fx-background-color: #f5f5f5; -fx-background-radius: 10px;">
+         <Pane prefWidth="960.0" style="-fx-border-color: #d9d9d9d9; -fx-border-width: 0px 1px 0px 0px;">
+            <Pane layoutX="134.0" layoutY="119.0" prefHeight="659.0" prefWidth="692.0" style="-fx-border-color: #25A4F4; -fx-border-radius: 10px; -fx-background-color: #f5f5f5; -fx-background-radius: 10px;">
                <Label layoutX="41.0" layoutY="14.0" text="Bocadillo de atún">
                   <font>
                      <Font size="17.0" />
@@ -106,15 +106,12 @@
             </Pane>
             <Label layoutX="122.0" layoutY="14.0" text="Bocadillo Frio">
                <font>
-                  <Font size="14.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
             <ImageView fitHeight="150.0" fitWidth="20.0" layoutX="95.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../assets/copo-de-nieve%201.png" />
             </ImageView>
-            <padding>
-               <Insets right="50.0" />
-            </padding>
          </Pane>
          <Pane>
             <HBox.margin>
@@ -168,18 +165,18 @@
       </HBox>
    </center>
    <bottom>
-      <Pane prefHeight="48.0" prefWidth="600.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="80.0" prefWidth="1920.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
-         <Label layoutX="14.0" layoutY="14.0" text="Pedido:" textFill="WHITE">
+         <Label layoutX="14.0" layoutY="31.0" text="Pedido:" textFill="WHITE">
             <font>
-               <Font size="14.0" />
+               <Font size="20.0" />
             </font>
          </Label>
-         <Button fx:id="orderButton" contentDisplay="CENTER" layoutX="514.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-radius: 15px; -fx-background-color: #25A4F4; -fx-border-radius: 3px; -fx-border-color: white; -fx-border-radius: 15px;" text="Pedir" textFill="WHITE">
+         <Button fx:id="orderButton" contentDisplay="CENTER" layoutX="1819.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-radius: 15px; -fx-background-color: #25A4F4; -fx-border-radius: 3px; -fx-border-color: white; -fx-border-radius: 15px;" text="Pedir" textFill="WHITE">
             <font>
-               <Font size="14.0" />
+               <Font size="20.0" />
             </font>
             <padding>
                <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
@@ -188,9 +185,9 @@
                <Cursor fx:constant="HAND" />
             </cursor>
          </Button>
-         <Label layoutX="327.0" layoutY="14.0" text="Ningún pedido seleccinado" textFill="WHITE">
+         <Label layoutX="1400.0" layoutY="29.0" text="Ningún bocadillo seleccinado" textFill="WHITE">
             <font>
-               <Font size="14.0" />
+               <Font size="20.0" />
             </font>
          </Label>
       </Pane>
