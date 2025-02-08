@@ -3,6 +3,7 @@ module org.example.mibocatafx {
     requires javafx.fxml;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires java.naming;
 
 
     opens org.example.mibocatafx to javafx.fxml;
