@@ -1,18 +1,19 @@
 package org.example.mibocatafx.dao;
 
+import org.example.mibocatafx.models.Alumno;
 import org.example.mibocatafx.util.HibernateConnection;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import javax.naming.Referenceable.*;
 
 import java.util.List;
 
 public class AlumnoDAO {
-//    Session session = HibernateConnection.getSession();
-//    Transaction tx = null;
-//
-//    public List getById(int id) {
-//        return session.createQuery("from Alumno a where a.id = id").getResultList();
-//    }
-//
+
+    public List<Alumno> getAll() {
+        try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+            return session.createQuery("from Alumno", Alumno.class).getResultList();
+        }
+    }
+
 
 }
