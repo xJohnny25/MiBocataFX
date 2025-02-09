@@ -1,204 +1,215 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <Pane prefHeight="80.0" prefWidth="520.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="70.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/Logo3.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="120.0" layoutY="20.0" text="SELECCIONE SU BOCADILLO" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER" layoutX="1600.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" spacing="50.0">
-               <children>
-                  <VBox alignment="CENTER" spacing="5.0">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/user%20(1)%201.png" />
-                           </image>
-                        </ImageView>
-                        <Label text="Perfil" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                     </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </VBox>
-                  <VBox alignment="CENTER" spacing="5.0">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/invoice%202.png" />
-                           </image>
-                        </ImageView>
-                        <Label text="Historial" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                     </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </VBox>
-                  <VBox alignment="CENTER" spacing="5.0">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/calendar%20(1)%201.png" />
-                           </image>
-                        </ImageView>
-                        <Label text="Calendario" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font></Label>
-                     </children>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-      </Pane>
-   </top>
-   <center>
-      <HBox style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-         <Pane prefWidth="960.0" style="-fx-border-color: #d9d9d9d9; -fx-border-width: 0px 1px 0px 0px;">
-            <Pane layoutX="134.0" layoutY="119.0" prefHeight="659.0" prefWidth="692.0" style="-fx-border-color: #25A4F4; -fx-border-radius: 10px; -fx-background-color: #f5f5f5; -fx-background-radius: 10px;">
-               <Label layoutX="41.0" layoutY="14.0" text="Bocadillo de atún">
-                  <font>
-                     <Font size="26.0" />
-                  </font>
-               </Label>
-               <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="23.0" layoutY="64.0" prefWidth="166.0" text="Bocadillo de atún con lechuga y mayonesa" textOverrun="WORD_ELLIPSIS" wrapText="true">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Label>
-               <HBox layoutX="48.0" layoutY="148.0" spacing="20.0">
-                  <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../assets/fish.png" />
-                  </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../assets/egg.png" />
-                  </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../assets/wheat.png" />
-                  </ImageView>
-               </HBox>
-               <Label layoutX="97.0" layoutY="188.0" text="2€">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Label>
-            </Pane>
-            <Label layoutX="360.0" layoutY="35.0" text="Bocadillo Frio">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="300.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@../assets/copo-de-nieve%201.png" />
-            </ImageView>
-         </Pane>
-         <Pane>
-            <HBox.margin>
-               <Insets />
-            </HBox.margin>
-            <Pane layoutX="44.0" layoutY="48.0" prefHeight="227.0" prefWidth="213.0" style="-fx-border-color: #25A4F4; -fx-border-radius: 10px; -fx-background-color: #f5f5f5; -fx-background-radius: 10px;">
-               <Label layoutX="38.0" layoutY="14.0" text="Bocadillo de tortilla">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Label>
-               <Label layoutX="24.0" layoutY="61.0" prefHeight="60.0" prefWidth="164.0" text="Bocadillo de tortilla de patatas" textOverrun="CLIP" wrapText="true">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Label>
-               <HBox layoutX="48.0" layoutY="139.0" spacing="20.0">
-                  <children>
-                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../assets/egg.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../assets/fish.png" />
-                        </image>
-                     </ImageView>
-                     <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../assets/wheat.png" />
-                        </image>
-                     </ImageView>
-                  </children>
-               </HBox>
-               <Label layoutX="97.0" layoutY="188.0" text="3€">
-                  <font>
-                     <Font size="16.0" />
-                  </font>
-               </Label>
-            </Pane>
-            <Label layoutX="109.0" layoutY="14.0" text="Bocadillo Caliente">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="150.0" fitWidth="20.0" layoutX="81.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <Image url="@../assets/flame%201.png" />
-            </ImageView>
-         </Pane>
-      </HBox>
-   </center>
-   <bottom>
-      <Pane prefHeight="80.0" prefWidth="1920.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-         <Label layoutX="14.0" layoutY="31.0" text="Pedido:" textFill="WHITE">
-            <font>
-               <Font size="20.0" />
-            </font>
-         </Label>
-         <Button fx:id="orderButton" contentDisplay="CENTER" layoutX="1819.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-radius: 15px; -fx-background-color: #25A4F4; -fx-border-radius: 3px; -fx-border-color: white; -fx-border-radius: 15px;" text="Pedir" textFill="WHITE">
-            <font>
-               <Font size="20.0" />
-            </font>
-            <padding>
-               <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
-            </padding>
-            <cursor>
-               <Cursor fx:constant="HAND" />
-            </cursor>
-         </Button>
-         <Label layoutX="1400.0" layoutY="29.0" text="Ningún bocadillo seleccinado" textFill="WHITE">
-            <font>
-               <Font size="20.0" />
-            </font>
-         </Label>
-      </Pane>
-   </bottom>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <AnchorPane prefHeight="60.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="170.0" layoutX="7.0" layoutY="5.0" pickOnBounds="true"
+                           preserveRatio="true" AnchorPane.leftAnchor="14.0">
+                    <image>
+                        <Image url="@../assets/Logo2.png"/>
+                    </image>
+                </ImageView>
+                <HBox alignment="CENTER" layoutX="390.0" layoutY="5.0" spacing="15.0" AnchorPane.rightAnchor="14.0">
+                    <children>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" style="-fx-background-color: transparent;"
+                                text="Perfil" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../assets/user%20(1)%201.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" style="-fx-background-color: transparent;"
+                                text="HIstorial" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../assets/invoice%202.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button contentDisplay="TOP" mnemonicParsing="false" style="-fx-background-color: transparent;"
+                                text="Calendario" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../assets/calendar%20(1)%201.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </top>
+    <bottom>
+        <AnchorPane prefHeight="60.0" prefWidth="600.0" style="-fx-background-color: #25A4F4;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="14.0" layoutY="22.0" text="Pedido:" textFill="WHITE" AnchorPane.leftAnchor="14.0">
+                    <font>
+                        <Font name="System Bold" size="14.0"/>
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" layoutX="343.0" layoutY="17.0" spacing="40.0" AnchorPane.rightAnchor="14.0">
+                    <children>
+                        <Label text="No has seleccionado ningún pedido" textFill="WHITE"/>
+                        <Button mnemonicParsing="false"
+                                style="-fx-background-color: #25A4F4; -fx-border-color: white; -fx-border-radius: 10px; -fx-background-radius: 10px;"
+                                text="Pedir" textFill="WHITE">
+                            <padding>
+                                <Insets bottom="5.0" left="20.0" right="20.0" top="5.0"/>
+                            </padding>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </bottom>
+    <center>
+        <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: white;"
+                   BorderPane.alignment="CENTER">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <HBox layoutX="84.0" layoutY="22.0" spacing="7.0">
+                            <children>
+                                <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../assets/copo-de-nieve%201.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label text="Bocadillo Frío">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <VBox alignment="CENTER" layoutX="48.0" layoutY="64.0" prefHeight="200.0" prefWidth="200.0"
+                              spacing="30.0" style="-fx-border-color: #25A4F4; -fx-border-radius: 20px;"
+                              AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="48.0">
+                            <children>
+                                <Label text="Bocadillo de atún">
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                </Label>
+                                <Label text="Descripción del bocadillo">
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                </Label>
+                                <HBox alignment="CENTER" spacing="15.0">
+                                    <children>
+                                        <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true"
+                                                   preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/egg.png"/>
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true"
+                                                   preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/fish.png"/>
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true"
+                                                   preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/wheat.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </HBox>
+                                <Label text="2€">
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                </Label>
+                            </children>
+                            <rotationAxis>
+                                <Point3D/>
+                            </rotationAxis>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+
+                    <HBox layoutX="84.0" layoutY="22.0" spacing="7.0">
+                        <children>
+                            <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../assets/copo-de-nieve%201.png"/>
+                                </image>
+                            </ImageView>
+                            <Label text="Bocadillo Frío">
+                                <font>
+                                    <Font size="16.0"/>
+                                </font>
+                            </Label>
+                        </children>
+                    </HBox>
+                    <VBox alignment="CENTER" layoutX="48.0" layoutY="64.0" prefHeight="200.0" prefWidth="200.0"
+                          spacing="30.0" style="-fx-border-color: #25A4F4; -fx-border-radius: 20px;"
+                          AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="48.0">
+                        <children>
+                            <Label text="Bocadillo de atún">
+                                <font>
+                                    <Font size="14.0"/>
+                                </font>
+                            </Label>
+                            <Label text="Descripción del bocadillo">
+                                <font>
+                                    <Font size="14.0"/>
+                                </font>
+                            </Label>
+                            <HBox alignment="CENTER" spacing="15.0">
+                                <children>
+                                    <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true"
+                                               preserveRatio="true">
+                                        <image>
+                                            <Image url="@../assets/egg.png"/>
+                                        </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true"
+                                               preserveRatio="true">
+                                        <image>
+                                            <Image url="@../assets/fish.png"/>
+                                        </image>
+                                    </ImageView>
+                                    <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true"
+                                               preserveRatio="true">
+                                        <image>
+                                            <Image url="@../assets/wheat.png"/>
+                                        </image>
+                                    </ImageView>
+                                </children>
+                            </HBox>
+                            <Label text="2€">
+                                <font>
+                                    <Font size="14.0"/>
+                                </font>
+                            </Label>
+                        </children>
+                        <rotationAxis>
+                            <Point3D/>
+                        </rotationAxis>
+                    </VBox>
+
+            </items>
+        </SplitPane>
+    </center>
 </BorderPane>
