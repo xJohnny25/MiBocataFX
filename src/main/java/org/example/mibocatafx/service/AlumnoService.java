@@ -10,6 +10,8 @@ public class AlumnoService {
     private AlumnoDAO alumnoDAO = new AlumnoDAO();
     private List<Alumno> listadoAlumnos = new ArrayList<>();
 
+    //TODO
+
 //    public boolean comprobarCredenciales(String mail, String password) {
 //        listadoAlumnos = alumnoDAO.getAll();
 //
@@ -21,4 +23,12 @@ public class AlumnoService {
 //
 //        return false;
 //    }
+
+    public int getIdAlumno(int id) {
+        if (id == 0) {
+            throw new IllegalArgumentException("El ID no puede estar vacío.");
+        }
+
+        return alumnoDAO.getIdAlumno(id);
+    }
 }

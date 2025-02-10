@@ -6,7 +6,7 @@ import org.example.mibocatafx.util.TipoBocadillo;
 
 @Entity
 @Table(name = "bocadillo")
-public class Bocadillo {
+public class Bocata {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental
     private int id;
@@ -26,8 +26,7 @@ public class Bocadillo {
     @Column(name = "precio", nullable = false)
     private double precio;
 
-    public Bocadillo(int id, String nombre, TipoBocadillo tipo, DiaBocadillo dia, String descripcion, double precio) {
-        this.id = id;
+    public Bocata(String nombre, TipoBocadillo tipo, DiaBocadillo dia, String descripcion, double precio) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.dia = dia;
@@ -35,7 +34,7 @@ public class Bocadillo {
         this.precio = precio;
     }
 
-    public Bocadillo() {}
+    public Bocata() {}
 
     public int getId() {
         return id;

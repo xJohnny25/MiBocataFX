@@ -25,8 +25,7 @@ public class Alumno {
     @Column(name = "motivo_baja")
     private String motivoBaja;
 
-    public Alumno(int id, String nombre, int idUsuario, int idCurso, Date fechaBaja, String motivoBaja) {
-        this.id = id;
+    public Alumno( String nombre, int idUsuario, int idCurso, Date fechaBaja, String motivoBaja) {
         this.nombre = nombre;
         this.idUsuario = idUsuario;
         this.idCurso = idCurso;
