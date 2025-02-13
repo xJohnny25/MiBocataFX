@@ -7,11 +7,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.mibocatafx.HelloApplication;
+import org.example.mibocatafx.models.Usuario;
 import org.example.mibocatafx.service.AlumnoService;
+import org.example.mibocatafx.service.UsuarioService;
 
 import java.io.IOException;
 
 public class LoginController {
+    private Usuario usuario;
+    
     @FXML
     private TextField userInput;
 
@@ -20,15 +24,18 @@ public class LoginController {
 
     @FXML
     protected void onLoginButtonClick() {
-       AlumnoService alumnoService = new AlumnoService();
+       UsuarioService usuarioService = new UsuarioService();
 
-        String userMail = userInput.getText();
-        String userPassword = passField.getText();
+        usuario = usuarioService.getUsuarioByMail(userInput.getText(), passField.getText());
 
-        try {
-            abrirVentana();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (usuario != null) {
+            try {
+                abrirVentana();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("El usuario no se encuentra en la base de datos");
         }
     }
 
@@ -37,12 +44,21 @@ public class LoginController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
-        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        ChooseSandwichController chooseSandwichController = fxmlLoader.getController();
+
+        System.out.println(usuario);
 
         Stage stage = new Stage();
         stage.setTitle("Selección Bocadillo");
         stage.setMaximized(true);
         stage.setScene(scene);
+
+        stage.setOnShown(windowEvent -> {
+            chooseSandwichController.setUsuario(usuario);
+            chooseSandwichController.cargarBocadillos();
+            chooseSandwichController.makeOrder();
+        });
+
         stage.show();
 
         Stage anteriorVentana = (Stage) userInput.getScene().getWindow();

@@ -2,6 +2,7 @@ package org.example.mibocatafx.dao;
 
 import jakarta.persistence.Query;
 import org.example.mibocatafx.models.Alumno;
+import org.example.mibocatafx.models.Usuario;
 import org.example.mibocatafx.util.HibernateConnection;
 import org.hibernate.Session;
 import javax.naming.Referenceable.*;
@@ -16,17 +17,13 @@ public class AlumnoDAO {
         }
     }
 
-    public int getIdAlumno(int id) {
+    public Alumno getAlumnoByUsuario(Usuario usuario) {
         try (Session session = HibernateConnection.getSessionFactory().openSession()){
-            Query query = session.createQuery("select Alumno.id from Alumno a where a.id = :id"); //necesito el usuario para conseguir el id segun el correo del usuario??
-            query.setParameter("id", id);
+            Query query = session.createQuery("from Alumno a where a.usuario = :usuario");
+            query.setParameter("usuario", usuario);
 
-            return query.getFirstResult();
-        } catch (Exception e) {
-            System.out.println("Id del alumno no encontrado.");
+            return (Alumno) query.getSingleResult();
         }
-
-        return 0;
     }
 
     //TODO -> Crear método getId del alumno en la bd ¿Vale el getter?

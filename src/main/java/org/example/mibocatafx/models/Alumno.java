@@ -1,10 +1,14 @@
 package org.example.mibocatafx.models;
 
 import jakarta.persistence.*;
+import org.example.mibocatafx.models.Usuario;
+import org.example.mibocatafx.models.Curso;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name = "alumno")
 public class Alumno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental
@@ -13,11 +17,13 @@ public class Alumno {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "id_usuario", nullable = false)
-    private int idUsuario;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usuario", nullable = false, referencedColumnName = "id")
+    private Usuario usuario;
 
-    @Column(name = "id_curso", nullable = false)
-    private int idCurso;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_curso", nullable = false, referencedColumnName = "nombre")
+    private Curso curso;
 
     @Column(name = "fecha_baja")
     private Date fechaBaja;
@@ -25,12 +31,16 @@ public class Alumno {
     @Column(name = "motivo_baja")
     private String motivoBaja;
 
-    public Alumno( String nombre, int idUsuario, int idCurso, Date fechaBaja, String motivoBaja) {
-        this.nombre = nombre;
-        this.idUsuario = idUsuario;
-        this.idCurso = idCurso;
-        this.fechaBaja = fechaBaja;
+    @ManyToMany(mappedBy = "alumnos")
+    private List<Descuento> descuentos;
+
+    public Alumno(String motivoBaja, Date fechaBaja, Curso curso, Usuario usuario, String nombre, int id) {
         this.motivoBaja = motivoBaja;
+        this.fechaBaja = fechaBaja;
+        this.curso = curso;
+        this.usuario = usuario;
+        this.nombre = nombre;
+        this.id = id;
     }
 
     public Alumno() {}
@@ -49,18 +59,18 @@ public class Alumno {
         this.nombre = nombre;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public int getIdCurso() {
-        return idCurso;
+    public Curso getCurso() {
+        return curso;
     }
-    public void setIdCurso(int idCurso) {
-        this.idCurso = idCurso;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     public Date getFechaBaja() {

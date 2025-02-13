@@ -1,6 +1,7 @@
 package org.example.mibocatafx.models;
 
 import jakarta.persistence.*;
+import org.example.mibocatafx.util.Rol;
 
 import java.util.Date;
 
@@ -22,6 +23,9 @@ public class Usuario {
 
     @Column(name = "fecha_baja")
     private Date fechaBaja;
+
+    @Column(name = "rol")
+    private Rol rol;
 
     public Usuario(String correo, String contrasena, String mac, Date fechaBaja) {
         this.correo = correo;

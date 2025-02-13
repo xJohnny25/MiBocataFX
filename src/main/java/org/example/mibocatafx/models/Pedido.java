@@ -2,6 +2,7 @@ package org.example.mibocatafx.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,31 +12,34 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental
     private int id;
 
-    @Column(name = "id_alumno", nullable = false)
-    private int idAlumno;
+    @ManyToOne
+    @JoinColumn(name = "id_alumno", nullable = false)
+    private Alumno alumno;
 
-    @Column(name = "id_bocadillo", nullable = false)
-    private int idBocadillo;
+    @ManyToOne
+    @JoinColumn(name = "id_bocadillo", nullable = false)
+    private Bocata bocadillo;
 
     @Column(name = "fecha_retirada")
     private LocalDateTime fechaRetirada;
 
     @Column(name = "fecha", nullable = false)
-    private LocalDateTime fecha;
+    private LocalDate fecha;
 
     @Column(name = "costo_final")
     private double precioFinal;
 
-    @Column(name = "id_descuento")
-    private int idDescuento;
+    @ManyToOne
+    @JoinColumn(name = "id_descuento")
+    private Descuento descuento;
 
-    public Pedido(int idAlumno, int idBocadillo, LocalDateTime fechaRetirada, LocalDateTime fecha, double precioFinal, int idDescuento) {
-        this.idAlumno = idAlumno;
-        this.idBocadillo = idBocadillo;
+    public Pedido(Alumno alumno, Bocata bocadillo, LocalDateTime fechaRetirada, LocalDate fecha, double precioFinal, Descuento descuento) {
+        this.alumno = alumno;
+        this.bocadillo = bocadillo;
         this.fechaRetirada = fechaRetirada;
         this.fecha = fecha;
         this.precioFinal = precioFinal;
-        this.idDescuento = idDescuento;
+        this.descuento = descuento;
     }
 
     public Pedido() {}
@@ -47,18 +51,18 @@ public class Pedido {
         this.id = id;
     }
 
-    public int getIdAlumno() {
-        return idAlumno;
+    public Alumno getAlumno() {
+        return alumno;
     }
-    public void setIdAlumno(int idAlumno) {
-        this.idAlumno = idAlumno;
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
-    public int getIdBocadillo() {
-        return idBocadillo;
+    public Bocata getBocadillo() {
+        return bocadillo;
     }
-    public void setIdBocadillo(int idBocadillo) {
-        this.idBocadillo = idBocadillo;
+    public void setBocadillo(Bocata bocadillo) {
+        this.bocadillo = bocadillo;
     }
 
     public LocalDateTime getFechaRetirada() {
@@ -68,10 +72,10 @@ public class Pedido {
         this.fechaRetirada = fechaRetirada;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -82,10 +86,10 @@ public class Pedido {
         this.precioFinal = precioFinal;
     }
 
-    public int getIdDescuento() {
-        return idDescuento;
+    public Descuento getDescuento() {
+        return descuento;
     }
-    public void setIdDescuento(int idDescuento) {
-        this.idDescuento = idDescuento;
+    public void setDescuento(Descuento descuento) {
+        this.descuento = descuento;
     }
 }

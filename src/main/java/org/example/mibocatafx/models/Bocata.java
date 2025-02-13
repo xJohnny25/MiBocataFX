@@ -8,17 +8,15 @@ import org.example.mibocatafx.util.TipoBocadillo;
 @Table(name = "bocadillo")
 public class Bocata {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Autoincremental
-    private int id;
-
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
     @Column(name = "tipo", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoBocadillo tipo;
 
     @Column(name = "dia")
-    private DiaBocadillo dia;
+    private int dia;
 
     @Column(name = "descripcion")
     private String descripcion;
@@ -26,7 +24,7 @@ public class Bocata {
     @Column(name = "precio", nullable = false)
     private double precio;
 
-    public Bocata(String nombre, TipoBocadillo tipo, DiaBocadillo dia, String descripcion, double precio) {
+    public Bocata(String nombre, TipoBocadillo tipo, int dia, String descripcion, double precio) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.dia = dia;
@@ -35,13 +33,6 @@ public class Bocata {
     }
 
     public Bocata() {}
-
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -57,10 +48,10 @@ public class Bocata {
         this.tipo = tipo;
     }
 
-    public DiaBocadillo getDia() {
+    public int getDia() {
         return dia;
     }
-    public void setDia(DiaBocadillo dia) {
+    public void setDia(int dia) {
         this.dia = dia;
     }
 
