@@ -7,8 +7,67 @@
     -fx-font-family: "Poppins";
 }
 
-#hbox-background {
-    -fx-background-image: url("/assets/sandwichbackground.jpg");
-    -fx-background-size: cover;
-    -fx-background-position: center;
+/* Fondo principal */
+.hbox-background {
+    -fx-background-color: #E2E6E9;
+}
+
+/* Contenedor principal (formulario de login) */
+.vbox-container {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+}
+
+/* Sombra del contenedor */
+.vbox-container .drop-shadow {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 10, 0, 0, 5);
+}
+
+/* Título */
+.label-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+/* Caja de entrada de usuario y contraseña */
+.textfield, .passwordfield {
+    -fx-background-radius: 30;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 30;
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 1.1em;
+}
+
+/* Botón de login */
+#loginButton {
+    -fx-background-color: #008CFF;
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-font-size: 1.2em;
+}
+
+/* Enlace de "¿Has olvidado tu contraseña?" */
+.label-link {
+    -fx-text-fill: #008CFF;
+    -fx-font-size: 1.2em;
+}
+
+/* Línea divisoria */
+.line-divider {
+    -fx-opacity: 0.25;
+    -fx-stroke-width: 0.8;
+}
+
+/* Estilos para el botón de Google */
+.hbox-google {
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 30;
+    -fx-background-color: white;
+    -fx-spacing: 10;
+}
+
+.label-google {
+    -fx-font-family: "Poppins Medium";
+    -fx-font-size: 1.2em;
 }

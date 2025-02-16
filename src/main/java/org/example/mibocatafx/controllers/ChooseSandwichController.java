@@ -2,6 +2,7 @@ package org.example.mibocatafx.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.skin.LabeledSkinBase;
@@ -29,6 +30,7 @@ public class ChooseSandwichController {
     private final AlumnoService alumnoService = new AlumnoService();
     private Usuario usuario;
     private Pedido pedidoActual;
+    private Pedido pedidoExistente;
 
     @FXML
     private Button orderButton;
@@ -73,16 +75,35 @@ public class ChooseSandwichController {
         double precio = bocadillo.getPrecio();
         Alumno alumno = alumnoService.getAlumnoByUsuario(usuario);
 
-        // Verificar si ya tiene un pedido hoy
-        Pedido pedidoExistente = pedidoService.getPedidoHoy(alumno);
-
+        // Comprobamos si el alumno ya tiene un pedido
+        pedidoExistente = pedidoService.getPedidoHoy(alumno);
+        System.out.println(pedidoExistente.getBocadillo().getNombre());
 
         if (pedidoExistente != null) {
             // Si ya tiene un pedido, actualizamos el bocadillo
-            pedidoExistente.setBocadillo(bocadillo);
-            pedidoExistente.setPrecioFinal(precio);
-            pedidoActual = pedidoExistente;
-            System.out.println("Pedido actualizado: " + pedidoExistente);
+            if (pedidoExistente.getBocadillo().getTipo() == bocadillo.getTipo()) {
+                bottomLabel.setText(nombreBocadillo);
+                pedidoActual = pedidoExistente;
+
+                System.out.println("El pedido ya contiene este bocadillo");
+                System.out.println(pedidoActual.getBocadillo().getNombre());
+
+                return;
+            } else {
+                Pedido pedidoNuevo = new Pedido(
+                        pedidoExistente.getAlumno(),
+                        bocadillo,
+                        null,
+                        pedidoExistente.getFecha(),
+                        precio,
+                        null
+                );
+
+                pedidoActual = pedidoNuevo;
+
+                System.out.println("Pedido actualizado: " + pedidoNuevo.getId());
+                System.out.println(pedidoNuevo.getBocadillo().getNombre());
+            }
         } else {
             // Si no tiene pedido, creamos uno nuevo
             pedidoActual = new Pedido(alumno, bocadillo, null, LocalDate.now(), precio, null);
@@ -96,13 +117,16 @@ public class ChooseSandwichController {
         if (pedidoActual == null) {
             System.out.println("No hay bocadillo seleccionado.");
             return;
+        } else if (pedidoActual.getBocadillo().getNombre().equals(pedidoExistente.getBocadillo().getNombre())) {
+            mostrarAlerta("Pedido ya existente", "Ya tienes un pedido creado con este bocadillo", Alert.AlertType.INFORMATION);
+            return;
         }
 
         // Guardar o actualizar el pedido en la BD
         pedidoService.save(pedidoActual);
-        System.out.println("Pedido guardado en la base de datos: " + pedidoActual);
+        mostrarAlerta("Pedido creado", "Tu pedido ha sido guardado satisfactoriamente", Alert.AlertType.CONFIRMATION);
+        System.out.println("Pedido guardado en la base de datos: " + pedidoActual.getId());
     }
-
 
     public void cargarBocadillos() {
         List<Bocata> listaBocatasHoy = bocataService.getBocataToday();
@@ -116,8 +140,15 @@ public class ChooseSandwichController {
         descripcionBocadilloCaliente.setText(bocataCaliente.getDescripcion());
         descripcionBocadilloFrio.setText(bocataFrio.getDescripcion());
 
-        precioCaliente.setText(bocataCaliente.getPrecio() + "€");
-        precioFrio.setText(bocataFrio.getPrecio() + "€");
+        precioCaliente.setText(String.format("%.2f€", bocataCaliente.getPrecio()));
+        precioFrio.setText(String.format("%.2f€", bocataFrio.getPrecio()));
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipoAlerta) {
+        Alert alert = new Alert(tipoAlerta);
+        alert.setTitle(titulo);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
     public void setUsuario(Usuario usuario) {

@@ -21,8 +21,10 @@ public class PedidoDAO {
 
             if (pedido.getId() == 0) {
                 session.persist(pedido);
+                System.out.println("persist usado");
             } else {
                 session.merge(pedido);
+                System.out.println("merge usado");
             }
 
             tx.commit();
@@ -46,14 +48,21 @@ public class PedidoDAO {
     }
 
     public Pedido getPedidoHoy(Alumno alumno) {
-        LocalDate diaHoy = LocalDate.now();
+        //LocalDate diaHoy = LocalDate.now();
+        LocalDate diaHoy = LocalDate.of(2025, 2, 13);
 
         try (Session session = HibernateConnection.getSessionFactory().openSession()) {
             Query query = session.createQuery("from Pedido p where p.alumno = :alumno and p.fecha = :fecha");
             query.setParameter("alumno", alumno);
             query.setParameter("fecha", diaHoy);
 
-            return (Pedido) query.getSingleResult();
+            if (query.getSingleResult() != null) {
+                return (Pedido) query.getSingleResult();
+            }
+        } catch (NoResultException e) {
+            System.out.println("No se encontró ningún pedido de este alumno con la fecha de hoy");
         }
+
+        return null;
     }
 }

@@ -33,11 +33,11 @@ public class BocataDAO {
     }
 
     public List<Bocata> getBocataToday() {
-        int diaHoy = LocalDate.now().getDayOfWeek().getValue();
+        //int diaHoy = LocalDate.now().getDayOfWeek().getValue();
 
         try (Session session = HibernateConnection.getSessionFactory().openSession()) {
             Query query = session.createQuery("from Bocata b where b.dia = :dia");
-            query.setParameter("dia", diaHoy);
+            query.setParameter("dia", 4);
 
             return query.getResultList();
         } catch (Exception e) {

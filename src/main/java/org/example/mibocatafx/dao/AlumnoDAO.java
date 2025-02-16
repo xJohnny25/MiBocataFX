@@ -1,5 +1,6 @@
 package org.example.mibocatafx.dao;
 
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import org.example.mibocatafx.models.Alumno;
 import org.example.mibocatafx.models.Usuario;
@@ -23,6 +24,9 @@ public class AlumnoDAO {
             query.setParameter("usuario", usuario);
 
             return (Alumno) query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("No se ha encontrado el alumno");
+            return null;
         }
     }
 
