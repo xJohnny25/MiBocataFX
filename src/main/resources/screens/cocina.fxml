@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -54,7 +55,7 @@
                         <HBox alignment="CENTER" layoutX="14.0" spacing="20.0" style="-fx-border-color: #25A4F4; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <TextField fx:id="nameInput" promptText="Nombre..." />
-                              <TextField fx:id="lastNameInput" promptText="Apellidos..." />
+                              <ComboBox fx:id="tipeBox" prefWidth="150.0" promptText="Tipo" style="-fx-background-color: white; -fx-border-color: #25A4F4; -fx-border-radius: 10; -fx-background-radius: 10;" />
                               <ComboBox fx:id="cursesBox" prefWidth="150.0" promptText="Curso" style="-fx-background-color: white; -fx-border-color: #25A4F4; -fx-border-radius: 10; -fx-background-radius: 10;" />
                               <DatePicker fx:id="calendarInput" />
                            </children>
@@ -85,22 +86,34 @@
          <center>
             <TableView fx:id="table" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="tableNameColumn" prefWidth="75.0" text="Nombre" />
+                <TableColumn fx:id="tableBocadilloColumn" prefWidth="75.0" text="Bocadillo" />
+                  <TableColumn fx:id="tableCurseColumn" prefWidth="75.0" text="Curso" />
+                  <TableColumn fx:id="tableDateColumn" prefWidth="75.0" text="Fecha" />
               </columns>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </BorderPane.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </center>
+         <right>
+            <VBox prefHeight="167.0" prefWidth="100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="15.0" right="15.0" top="40.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
       </BorderPane>
    </center>
    <bottom>
       <AnchorPane prefHeight="60.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="numPages" layoutX="14.0" layoutY="16.0">
+            <Pane layoutX="14.0" layoutY="16.0">
                <children>
-                  <ComboBox promptText="10" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 10;">
+                  <ComboBox fx:id="numPages" promptText="10" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 10;">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -112,7 +125,7 @@
             </Pane>
             <Pane layoutX="492.0" layoutY="22.0" prefWidth="94.0" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="22.0">
                <children>
-                  <Label text="1 - 10 de 100" textFill="WHITE">
+                  <Label fx:id="resultsCount" text="1 - 10 de 100" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -121,7 +134,7 @@
             </Pane>
             <HBox alignment="CENTER" layoutX="170.0" layoutY="18.0" prefWidth="261.0" spacing="20.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="18.0">
                <children>
-                  <Button fx:id="previousPage" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 10;" text="&lt; Anterior" textFill="WHITE">
+                  <Button fx:id="previusPage" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 10;" text="&lt; Anterior" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
