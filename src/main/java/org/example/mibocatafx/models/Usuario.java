@@ -27,11 +27,12 @@ public class Usuario {
     @Column(name = "rol")
     private Rol rol;
 
-    public Usuario(String correo, String contrasena, String mac, Date fechaBaja) {
+    public Usuario(String correo, String contrasena, String mac, Date fechaBaja, Rol rol) {
         this.correo = correo;
         this.contrasena = contrasena;
         this.mac = mac;
         this.fechaBaja = fechaBaja;
+        this.rol = rol;
     }
 
     public Usuario() {}
@@ -69,5 +70,12 @@ public class Usuario {
     }
     public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }

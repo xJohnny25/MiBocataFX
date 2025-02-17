@@ -13,4 +13,25 @@ public class Curso {
 
     @Column(name = "fecha_baja")
     private LocalDate fechaBaja;
+
+    public Curso(String nombre, LocalDate fechaBaja) {
+        this.nombre = nombre;
+        this.fechaBaja = fechaBaja;
+    }
+
+    public Curso() {}
+
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public LocalDate getFechaBaja() {
+        return fechaBaja;
+    }
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
+    }
 }

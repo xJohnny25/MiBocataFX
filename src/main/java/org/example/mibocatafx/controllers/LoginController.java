@@ -22,6 +22,9 @@ public class LoginController {
     @FXML
     private PasswordField passField;
 
+    private FXMLLoader fxmlLoader;
+    private Scene scene;
+
     @FXML
     protected void onLoginButtonClick() {
        UsuarioService usuarioService = new UsuarioService();
@@ -30,7 +33,7 @@ public class LoginController {
 
         if (usuario != null) {
             try {
-                abrirVentana();
+                abrirVentana(usuario.getRol().name());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -41,26 +44,44 @@ public class LoginController {
     }
 
     @FXML
-    protected void abrirVentana() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+    protected void abrirVentana(String rol) throws IOException {
 
-        ChooseSandwichController chooseSandwichController = fxmlLoader.getController();
 
-        System.out.println(usuario);
+        switch (rol) {
+            case "alumno":
+                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
+                scene = new Scene(fxmlLoader.load());
 
-        Stage stage = new Stage();
-        stage.setTitle("Selección Bocadillo");
-        stage.setMaximized(true);
-        stage.setScene(scene);
+                ChooseSandwichController chooseSandwichController = fxmlLoader.getController();
 
-        stage.setOnShown(windowEvent -> {
-            chooseSandwichController.setUsuario(usuario);
-            chooseSandwichController.cargarBocadillos();
-            chooseSandwichController.makeOrder();
-        });
+                System.out.println(usuario);
 
-        stage.show();
+                Stage stage = new Stage();
+                stage.setTitle("Selección Bocadillo");
+                stage.setMaximized(true);
+                stage.setScene(scene);
+
+                stage.setOnShown(windowEvent -> {
+                    chooseSandwichController.setUsuario(usuario);
+                    chooseSandwichController.cargarBocadillos();
+                    chooseSandwichController.makeOrder();
+                });
+
+                stage.show();
+            break;
+
+            case "cocina":
+                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
+                scene = new Scene(fxmlLoader.load());
+
+            break;
+
+            case "admin":
+                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/admin.fxml"));
+                scene = new Scene(fxmlLoader.load());
+
+            break;
+        }
 
         Stage anteriorVentana = (Stage) userInput.getScene().getWindow();
         anteriorVentana.close();

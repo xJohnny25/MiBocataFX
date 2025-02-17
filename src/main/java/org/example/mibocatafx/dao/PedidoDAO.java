@@ -1,16 +1,18 @@
 package org.example.mibocatafx.dao;
 
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.Query;
 import org.example.mibocatafx.models.Alumno;
 import org.example.mibocatafx.models.Pedido;
 import org.example.mibocatafx.util.HibernateConnection;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PedidoDAO {
     public void save(Pedido pedido) {
@@ -64,5 +66,60 @@ public class PedidoDAO {
         }
 
         return null;
+    }
+
+    public List<Pedido> getPaginate(int page, int offset, HashMap<String, String> filtros) {
+        try (Session session = HibernateConnection.getSessionFactory().openSession()){
+            StringBuilder hql = new StringBuilder("FROM Pedido p WHERE true");
+
+            if (filtros != null) {
+                for (String key : filtros.keySet()) {
+                    if (key.equals("nombre")) {
+                        hql.append("AND p.alumno.nombre like :").append(key);
+                    } else {
+                        hql.append("AND m.").append(key).append(" LIKE :").append(key);
+                    }
+                }
+            }
+
+            Query<Pedido> query = session.createQuery(hql.toString(), Pedido.class);
+
+            if (filtros != null) {
+                for (HashMap.Entry<String, String> filtro : filtros.entrySet()) {
+                    query.setParameter(filtro.getKey(), "%" + filtro.getValue() + "%");
+                }
+            }
+
+            query.setFirstResult((page - 1) * offset);
+            query.setMaxResults(offset);
+
+            return query.getResultList();
+        }
+    }
+
+    public long countPedidos(HashMap<String, String> filtros) {
+        try (Session session = HibernateConnection.getSessionFactory().openSession()){
+            StringBuilder hql = new StringBuilder("SELECT COUNT(p) FROM Pedido p WHERE true");
+
+            if (filtros != null) {
+                for (String key : filtros.keySet()) {
+                    if (key.equals("nombre")) {
+                        hql.append("AND p.alumno.nombre like :").append(key);
+                    } else {
+                        hql.append("AND m.").append(key).append(" LIKE :").append(key);
+                    }
+                }
+            }
+
+            Query<Long> query = session.createQuery(hql.toString(), Long.class);
+
+            if (filtros != null) {
+                for (HashMap.Entry<String, String> filtro : filtros.entrySet()) {
+                    query.setParameter(filtro.getKey(),"%" + filtro.getValue() + "%");
+                }
+            }
+
+            return query.getSingleResult();
+        }
     }
 }

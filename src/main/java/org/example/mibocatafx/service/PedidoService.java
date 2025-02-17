@@ -4,6 +4,9 @@ import org.example.mibocatafx.dao.PedidoDAO;
 import org.example.mibocatafx.models.Alumno;
 import org.example.mibocatafx.models.Pedido;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class PedidoService {
     private final PedidoDAO pedidoDAO = new PedidoDAO();
 
@@ -29,5 +32,13 @@ public class PedidoService {
         }
 
         return pedidoDAO.getPedidoHoy(alumno);
+    }
+
+    public List<Pedido> getPaginated(int page, int offset, HashMap<String, String> filtros) {
+        return pedidoDAO.getPaginate(page, offset, filtros);
+    }
+
+    public Long countPedidos(HashMap<String, String> filtros) {
+        return pedidoDAO.countPedidos(filtros);
     }
 }
