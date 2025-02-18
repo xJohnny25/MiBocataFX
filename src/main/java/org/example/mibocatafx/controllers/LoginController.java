@@ -24,6 +24,7 @@ public class LoginController {
 
     private FXMLLoader fxmlLoader;
     private Scene scene;
+    private Stage stage;
 
     @FXML
     protected void onLoginButtonClick() {
@@ -45,8 +46,6 @@ public class LoginController {
 
     @FXML
     protected void abrirVentana(String rol) throws IOException {
-
-
         switch (rol) {
             case "alumno":
                 fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
@@ -56,7 +55,7 @@ public class LoginController {
 
                 System.out.println(usuario);
 
-                Stage stage = new Stage();
+                stage = new Stage();
                 stage.setTitle("Selección Bocadillo");
                 stage.setMaximized(true);
                 stage.setScene(scene);
@@ -71,15 +70,27 @@ public class LoginController {
             break;
 
             case "cocina":
-                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
+                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/cocina.fxml"));
                 scene = new Scene(fxmlLoader.load());
 
+                stage = new Stage();
+                stage.setTitle("Selección Bocadillo");
+                stage.setMaximized(true);
+                stage.setScene(scene);
+
+                stage.show();
             break;
 
             case "admin":
                 fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/admin.fxml"));
                 scene = new Scene(fxmlLoader.load());
 
+                stage = new Stage();
+                stage.setTitle("Selección Bocadillo");
+                stage.setMaximized(true);
+                stage.setScene(scene);
+
+                stage.show();
             break;
         }
 

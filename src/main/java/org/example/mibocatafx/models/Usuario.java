@@ -24,6 +24,7 @@ public class Usuario {
     @Column(name = "fecha_baja")
     private Date fechaBaja;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "rol")
     private Rol rol;
 
