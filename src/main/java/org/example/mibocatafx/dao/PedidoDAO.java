@@ -10,9 +10,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PedidoDAO {
     public void save(Pedido pedido) {
@@ -68,7 +68,7 @@ public class PedidoDAO {
         return null;
     }
 
-    public List<Pedido> getPaginate(int page, int offset, HashMap<String, String> filtros) {
+    public List<Pedido> getPaginated(int page, int offset, HashMap<String, String> filtros) {
         try (Session session = HibernateConnection.getSessionFactory().openSession()){
             StringBuilder hql = new StringBuilder("FROM Pedido p WHERE true");
 
@@ -120,6 +120,23 @@ public class PedidoDAO {
             }
 
             return query.getSingleResult();
+        }
+    }
+
+    public void updateFechaRetirada(Pedido pedido) {
+        Transaction tx;
+        LocalDateTime fechaRetirada = LocalDateTime.now();
+
+        try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+
+            Query query = session.createQuery("update Pedido p set p.fechaRetirada = :fechaRetirada where p.id = :pedido");
+            query.setParameter("fechaRetirada", fechaRetirada);
+            query.setParameter("pedido", pedido.getId());
+
+            query.executeUpdate();
+
+            tx.commit();
         }
     }
 }

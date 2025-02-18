@@ -35,10 +35,18 @@ public class PedidoService {
     }
 
     public List<Pedido> getPaginated(int page, int offset, HashMap<String, String> filtros) {
-        return pedidoDAO.getPaginate(page, offset, filtros);
+        return pedidoDAO.getPaginated(page, offset, filtros);
     }
 
     public Long countPedidos(HashMap<String, String> filtros) {
         return pedidoDAO.countPedidos(filtros);
+    }
+
+    public void updateFechaRetirada(Pedido pedido) {
+        if (pedido == null) {
+            throw new IllegalArgumentException("Se necesita un pedido y una fecha válida");
+        }
+
+        pedidoDAO.updateFechaRetirada(pedido);
     }
 }

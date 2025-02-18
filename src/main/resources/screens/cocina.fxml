@@ -15,10 +15,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.mibocatafx.controllers.CocinaController">
    <top>
        <AnchorPane style="-fx-background-color: #25A4F4;">
            <children>
@@ -90,6 +89,7 @@
                 <TableColumn fx:id="tableBocadilloColumn" prefWidth="75.0" text="Bocadillo" />
                   <TableColumn fx:id="tableCurseColumn" prefWidth="75.0" text="Curso" />
                   <TableColumn fx:id="tableDateColumn" prefWidth="75.0" text="Fecha" />
+                  <TableColumn fx:id="tableCompleteOrderColumn" prefWidth="75.0" text="Retirar" />
               </columns>
                <BorderPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -99,13 +99,6 @@
                </columnResizePolicy>
             </TableView>
          </center>
-         <right>
-            <VBox prefHeight="167.0" prefWidth="100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets bottom="15.0" right="15.0" top="40.0" />
-               </BorderPane.margin>
-            </VBox>
-         </right>
       </BorderPane>
    </center>
    <bottom>

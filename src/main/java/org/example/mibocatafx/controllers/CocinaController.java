@@ -9,13 +9,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import org.example.mibocatafx.dao.CursoDAO;
 import org.example.mibocatafx.models.Curso;
 import org.example.mibocatafx.models.Pedido;
 import org.example.mibocatafx.service.CursoService;
 import org.example.mibocatafx.service.PedidoService;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,7 +55,10 @@ public class CocinaController implements Initializable {
     private TableColumn tableDateColumn;
 
     @FXML
-    private ComboBox numPages;
+    private TableColumn tableCompleteOrderColumn;
+
+    @FXML
+    private ComboBox<Integer> numPages;
 
     @FXML
     private Button previusPage;
@@ -69,9 +72,11 @@ public class CocinaController implements Initializable {
     @FXML
     private Label resultsCount;
 
-    private int offset = numPages.getValue().toString().equals("10") ? 10 : (int) numPages.getValue();
+    int offset = 13;
+            //numPages.getValue().toString().equals("10") ? 10 : numPages.getValue();
     private HashMap<String, String> filtros = new HashMap<>();
     private long totalPedidos;
+    PedidoService pedidoService = new PedidoService();
 
 
     public void rellenarTabla(List<Pedido> pedidos) {
@@ -82,6 +87,44 @@ public class CocinaController implements Initializable {
             //tableBocadilloColumn.setCellValueFactory(new PropertyValueFactory<>("bocadillo.tipo"));
             //tableCurseColumn.setCellValueFactory(new PropertyValueFactory<>("alumno.curso"));
             tableDateColumn.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+
+            tableCompleteOrderColumn.setCellFactory(columna -> {
+                TableCell<Pedido, Void> cell = new TableCell<>() {
+                    private final Button botonRetirar = new Button("Retirar");
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setGraphic(null); // No mostrar el botón si la celda está vacía
+                        } else {
+                            // Obtener el pedido correspondiente a la fila actual
+                            Pedido pedido = getTableView().getItems().get(getIndex());
+
+                            if (pedido.getFechaRetirada() != null) {
+                                botonRetirar.setText("Retirado");
+                                botonRetirar.setDisable(true);
+                                botonRetirar.setStyle("-fx-cursor: not-allowed;");
+                            } else {
+                                // Si el pedido no está retirado, asignar acción al botón
+                                botonRetirar.setOnAction(actionEvent -> {
+                                    pedidoService.updateFechaRetirada(pedido);
+                                    botonRetirar.setText("Retirado");
+                                    botonRetirar.setDisable(true);
+                                    botonRetirar.setStyle("-fx-cursor: not-allowed;");
+                                });
+                                botonRetirar.setStyle("");
+                            }
+
+                            setGraphic(botonRetirar); // Mostrar el botón
+                        }
+                    }
+                };
+
+                return cell;
+            });
+
 
             //tableBocadilloColumn.setCellValueFactory(data-> new SimpleStringProperty(data.getValue()));
 
@@ -113,7 +156,7 @@ public class CocinaController implements Initializable {
                     Pedido pedido = (Pedido) cellDataFeatures.getValue();
 
                     return new SimpleStringProperty(
-                            pedido.getAlumno().getCurso().toString()
+                            pedido.getAlumno().getCurso().getNombre()
                     );
                 }
             });
@@ -126,11 +169,18 @@ public class CocinaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        numPages.getItems().addAll(10, 20, 30);
+        numPages.setValue(10);
+
+//        offset = 0;
+
         CursoService cursoService = new CursoService();
         List<Curso> cursos = cursoService.getAll();
         for (Curso curso : cursos) {
             cursesBox.getItems().add(curso.getNombre());
         }
+
+        tipeBox.getItems().addAll("Frio", "Caliente");
 
         PedidoService pedidoService = new PedidoService();
         List<Pedido> pedidos = pedidoService.getPaginated(1, offset, null);
