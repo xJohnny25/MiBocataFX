@@ -9,12 +9,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import org.example.mibocatafx.models.Bocata;
 import org.example.mibocatafx.models.Curso;
 import org.example.mibocatafx.models.Pedido;
+import org.example.mibocatafx.service.BocataService;
 import org.example.mibocatafx.service.CursoService;
 import org.example.mibocatafx.service.PedidoService;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class CocinaController implements Initializable {
     @FXML
-    private HBox logOutButton;
+    private HBox logOutButton; //TODO -> crear método cerrar sesión
 
     @FXML
     private TextField nameInput;
@@ -58,34 +61,28 @@ public class CocinaController implements Initializable {
     private TableColumn tableCompleteOrderColumn;
 
     @FXML
-    private ComboBox<Integer> numPages;
-
-    @FXML
-    private Button previusPage;
-
-    @FXML
-    private Button nextPage;
-
-    @FXML
     private Label pagesCount;
 
     @FXML
     private Label resultsCount;
 
-    int offset = 13;
-            //numPages.getValue().toString().equals("10") ? 10 : numPages.getValue();
-    private HashMap<String, String> filtros = new HashMap<>();
-    private long totalPedidos;
+    @FXML
+    private Button clearFiltersButton;
+
     PedidoService pedidoService = new PedidoService();
 
+    int offset = 16;
+    int currentPage = 1;
+    private long totalPedidos = pedidoService.countPedidos(null);
+    long totalPages = Math.round(Math.ceil((float) totalPedidos / (float) offset));
+
+
+    private HashMap<String, String> filtros = new HashMap<>();
 
     public void rellenarTabla(List<Pedido> pedidos) {
         try {
             table.setItems(FXCollections.observableArrayList(pedidos));
 
-            //tableNameColumn.setCellValueFactory(new PropertyValueFactory<>("alumno.nombre"));
-            //tableBocadilloColumn.setCellValueFactory(new PropertyValueFactory<>("bocadillo.tipo"));
-            //tableCurseColumn.setCellValueFactory(new PropertyValueFactory<>("alumno.curso"));
             tableDateColumn.setCellValueFactory(new PropertyValueFactory<>("fecha"));
 
             tableCompleteOrderColumn.setCellFactory(columna -> {
@@ -105,14 +102,12 @@ public class CocinaController implements Initializable {
                             if (pedido.getFechaRetirada() != null) {
                                 botonRetirar.setText("Retirado");
                                 botonRetirar.setDisable(true);
-                                botonRetirar.setStyle("-fx-cursor: not-allowed;");
                             } else {
-                                // Si el pedido no está retirado, asignar acción al botón
+                                // Si el pedido no está retirado, lo retiramos y lo deshabilitamos
                                 botonRetirar.setOnAction(actionEvent -> {
                                     pedidoService.updateFechaRetirada(pedido);
                                     botonRetirar.setText("Retirado");
                                     botonRetirar.setDisable(true);
-                                    botonRetirar.setStyle("-fx-cursor: not-allowed;");
                                 });
                                 botonRetirar.setStyle("");
                             }
@@ -124,9 +119,6 @@ public class CocinaController implements Initializable {
 
                 return cell;
             });
-
-
-            //tableBocadilloColumn.setCellValueFactory(data-> new SimpleStringProperty(data.getValue()));
 
             tableNameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
                 @Override
@@ -160,8 +152,6 @@ public class CocinaController implements Initializable {
                     );
                 }
             });
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,24 +159,128 @@ public class CocinaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        numPages.getItems().addAll(10, 20, 30);
-        numPages.setValue(10);
-
-//        offset = 0;
-
         CursoService cursoService = new CursoService();
         List<Curso> cursos = cursoService.getAll();
         for (Curso curso : cursos) {
             cursesBox.getItems().add(curso.getNombre());
         }
 
-        tipeBox.getItems().addAll("Frio", "Caliente");
+        BocataService bocataService = new BocataService();
+        List<Bocata> tiposBocata = bocataService.getBocataToday();
+
+        for (Bocata bocata : tiposBocata) {
+            tipeBox.getItems().add(bocata.getTipo().name());
+        }
 
         PedidoService pedidoService = new PedidoService();
         List<Pedido> pedidos = pedidoService.getPaginated(1, offset, null);
         rellenarTabla(pedidos);
-        totalPedidos = pedidoService.countPedidos(null);
+
+        pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
 
         resultsCount.setText("1/" + offset + " de " + totalPedidos);
+    }
+
+    @FXML
+    public void nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+
+            PedidoService pedidoService = new PedidoService();
+            List<Pedido> pedidos = pedidoService.getPaginated(currentPage, offset, filtros);
+            rellenarTabla(pedidos);
+            totalPedidos = pedidoService.countPedidos(filtros);
+
+            int firstRow = ((currentPage - 1) * offset) + 1;
+            long lastRow = Math.min((long) currentPage * offset, totalPedidos);
+
+            pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+
+            resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+        }
+    }
+
+    @FXML
+    public void previusPage() {
+        if (currentPage > 1) {
+            currentPage--;
+
+            PedidoService pedidoService = new PedidoService();
+            List<Pedido> pedidos = pedidoService.getPaginated(currentPage, offset, filtros);
+            rellenarTabla(pedidos);
+            totalPedidos = pedidoService.countPedidos(filtros);
+
+            int firstRow = ((currentPage - 1) * offset) + 1;
+            long lastRow = Math.min((long) currentPage * offset, totalPedidos);
+
+            pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+
+            resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+        }
+    }
+
+    public void filterTable() {
+        currentPage = 1;
+
+        filtros.clear();
+
+        if (!nameInput.getText().isEmpty()) {
+            filtros.put("nombre", nameInput.getText());
+        }
+
+        if (tipeBox.getValue() != null) {
+            filtros.put("tipo", tipeBox.getValue());
+        }
+
+        if (cursesBox.getValue() != null) {
+            filtros.put("curso", cursesBox.getValue());
+        }
+
+        if (calendarInput.getValue() != null && !calendarInput.getValue().isAfter(LocalDate.now())) {
+            filtros.put("fecha", calendarInput.getValue().toString());
+        }
+
+        PedidoService pedidoService = new PedidoService();
+        List<Pedido> pedidos = pedidoService.getPaginated(1, offset, filtros);
+        rellenarTabla(pedidos);
+        totalPedidos = pedidoService.countPedidos(filtros);
+
+        int firstRow = ((currentPage - 1) * offset) + 1;
+        long lastRow = Math.min((long) currentPage * offset, totalPedidos);
+
+
+        pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+
+        resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+    }
+
+    @FXML
+    public void clearFilters() {
+        filtros.clear();
+
+        nameInput.clear();
+
+        cursesBox.getSelectionModel().clearSelection();
+        cursesBox.setValue(null);
+        cursesBox.setPromptText("Curso");
+
+        tipeBox.getSelectionModel().clearSelection();
+        tipeBox.setValue(null);
+        tipeBox.setPromptText("Tipo");
+
+        calendarInput.setValue(null);
+
+        PedidoService pedidoService = new PedidoService();
+        List<Pedido> pedidos = pedidoService.getPaginated(1, offset, filtros);
+        rellenarTabla(pedidos);
+        totalPedidos = pedidoService.countPedidos(filtros);
+
+        int firstRow = ((currentPage - 1) * offset) + 1;
+        long lastRow = Math.min((long) currentPage * offset, totalPedidos);
+
+
+        pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+
+        resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
     }
 }

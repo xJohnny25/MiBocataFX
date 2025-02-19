@@ -1,9 +1,13 @@
 package org.example.mibocatafx.dao;
 
 import jakarta.persistence.NoResultException;
+import javafx.scene.Cursor;
 import org.example.mibocatafx.models.Alumno;
+import org.example.mibocatafx.models.Curso;
 import org.example.mibocatafx.models.Pedido;
+import org.example.mibocatafx.service.CursoService;
 import org.example.mibocatafx.util.HibernateConnection;
+import org.example.mibocatafx.util.TipoBocadillo;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PedidoDAO {
+    private CursoService cursoService = new CursoService();
+
     public void save(Pedido pedido) {
         Transaction tx;
 
@@ -50,8 +56,8 @@ public class PedidoDAO {
     }
 
     public Pedido getPedidoHoy(Alumno alumno) {
-        //LocalDate diaHoy = LocalDate.now();
-        LocalDate diaHoy = LocalDate.of(2025, 2, 13);
+        LocalDate diaHoy = LocalDate.now();
+//        LocalDate diaHoy = LocalDate.of(2025, 2, 13);
 
         try (Session session = HibernateConnection.getSessionFactory().openSession()) {
             Query query = session.createQuery("from Pedido p where p.alumno = :alumno and p.fecha = :fecha");
@@ -74,21 +80,30 @@ public class PedidoDAO {
 
             if (filtros != null) {
                 for (String key : filtros.keySet()) {
-                    if (key.equals("nombre")) {
-                        hql.append("AND p.alumno.nombre like :").append(key);
-                    } else {
-                        hql.append("AND m.").append(key).append(" LIKE :").append(key);
+                    switch (key) {
+                        case "nombre" -> hql.append(" AND p.alumno.nombre like :").append(key);
+                        case "tipo" -> hql.append(" AND p.bocadillo.tipo = :").append(key);
+                        case "curso" -> hql.append(" AND p.alumno.curso = :").append(key);
+                        case "fecha" -> hql.append(" AND p.fecha = :").append(key);
                     }
                 }
+
+                hql.append(" ORDER BY CASE WHEN p.fechaRetirada IS NULL THEN 0 ELSE 1 END, p.fecha DESC");
             }
 
             Query<Pedido> query = session.createQuery(hql.toString(), Pedido.class);
 
             if (filtros != null) {
                 for (HashMap.Entry<String, String> filtro : filtros.entrySet()) {
-                    query.setParameter(filtro.getKey(), "%" + filtro.getValue() + "%");
+                    switch (filtro.getKey()) {
+                        case "nombre" -> query.setParameter(filtro.getKey(), "%" + filtro.getValue() + "%");
+                        case "tipo" -> query.setParameter(filtro.getKey(), TipoBocadillo.valueOf(TipoBocadillo.class, filtro.getValue()));
+                        case "curso" -> query.setParameter(filtro.getKey(), cursoService.getCursoByName(filtro.getValue()));
+                        case "fecha" -> query.setParameter(filtro.getKey(), LocalDate.parse(filtro.getValue()));
+                    }
                 }
             }
+
 
             query.setFirstResult((page - 1) * offset);
             query.setMaxResults(offset);
@@ -103,10 +118,11 @@ public class PedidoDAO {
 
             if (filtros != null) {
                 for (String key : filtros.keySet()) {
-                    if (key.equals("nombre")) {
-                        hql.append("AND p.alumno.nombre like :").append(key);
-                    } else {
-                        hql.append("AND m.").append(key).append(" LIKE :").append(key);
+                    switch (key) {
+                        case "nombre" -> hql.append(" AND p.alumno.nombre like :").append(key);
+                        case "tipo" -> hql.append(" AND p.bocadillo.tipo = :").append(key);
+                        case "curso" -> hql.append(" AND p.alumno.curso = :").append(key);
+                        case "fecha" -> hql.append(" AND p.fecha = :").append(key);
                     }
                 }
             }
@@ -115,7 +131,12 @@ public class PedidoDAO {
 
             if (filtros != null) {
                 for (HashMap.Entry<String, String> filtro : filtros.entrySet()) {
-                    query.setParameter(filtro.getKey(),"%" + filtro.getValue() + "%");
+                    switch (filtro.getKey()) {
+                        case "nombre" -> query.setParameter(filtro.getKey(), filtro.getValue());
+                        case "tipo" -> query.setParameter(filtro.getKey(), TipoBocadillo.valueOf(TipoBocadillo.class, filtro.getValue()));
+                        case "curso" -> query.setParameter(filtro.getKey(), cursoService.getCursoByName(filtro.getValue()));
+                        case "fecha" -> query.setParameter(filtro.getKey(), LocalDate.parse(filtro.getValue()));
+                    }
                 }
             }
 

@@ -11,4 +11,12 @@ public class CursoService {
     public List<Curso> getAll() {
         return cursoDao.getAll();
     }
+
+    public Curso getCursoByName(String name) {
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("El nombre del curso no puede estar vacío");
+        }
+
+        return cursoDao.getCursoByName(name);
+    }
 }
