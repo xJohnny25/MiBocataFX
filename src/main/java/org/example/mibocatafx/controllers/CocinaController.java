@@ -183,13 +183,15 @@ public class CocinaController implements Initializable {
 
     @FXML
     public void nextPage() {
+        totalPedidos = pedidoService.countPedidos(filtros);
+        totalPages = Math.round(Math.ceil((float) totalPedidos / (float) offset));
+
         if (currentPage < totalPages) {
             currentPage++;
 
             PedidoService pedidoService = new PedidoService();
             List<Pedido> pedidos = pedidoService.getPaginated(currentPage, offset, filtros);
             rellenarTabla(pedidos);
-            totalPedidos = pedidoService.countPedidos(filtros);
 
             int firstRow = ((currentPage - 1) * offset) + 1;
             long lastRow = Math.min((long) currentPage * offset, totalPedidos);
@@ -202,13 +204,15 @@ public class CocinaController implements Initializable {
 
     @FXML
     public void previusPage() {
+        totalPedidos = pedidoService.countPedidos(filtros);
+        totalPages = Math.round(Math.ceil((float) totalPedidos / (float) offset));
+
         if (currentPage > 1) {
             currentPage--;
 
             PedidoService pedidoService = new PedidoService();
             List<Pedido> pedidos = pedidoService.getPaginated(currentPage, offset, filtros);
             rellenarTabla(pedidos);
-            totalPedidos = pedidoService.countPedidos(filtros);
 
             int firstRow = ((currentPage - 1) * offset) + 1;
             long lastRow = Math.min((long) currentPage * offset, totalPedidos);
@@ -249,7 +253,7 @@ public class CocinaController implements Initializable {
         long lastRow = Math.min((long) currentPage * offset, totalPedidos);
 
 
-        pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+        pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float)totalPedidos/(float)offset)));
 
         resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
     }

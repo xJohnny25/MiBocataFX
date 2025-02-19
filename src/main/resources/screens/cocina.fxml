@@ -111,7 +111,10 @@
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </padding>
                   </Button>
-               </children></Pane>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Pane>
             <Pane layoutX="492.0" layoutY="22.0" prefWidth="94.0" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="22.0">
                <children>
                   <Label fx:id="resultsCount" text="1 - 10 de 100" textFill="WHITE">

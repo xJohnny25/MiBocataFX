@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PedidoDAO {
-    private CursoService cursoService = new CursoService();
+    private final CursoService cursoService = new CursoService();
 
     public void save(Pedido pedido) {
         Transaction tx;
@@ -45,9 +45,9 @@ public class PedidoDAO {
         LocalDate diaHoy = LocalDate.now();
         try (Session session = HibernateConnection.getSessionFactory().openSession()) {
             List<Pedido> pedidos = session.createQuery("from Pedido p where p.alumno = :alumno and p.fecha = :fecha")
-                .setParameter("alumno", alumno)
-                .setParameter("fecha", diaHoy)
-                .getResultList();
+                    .setParameter("alumno", alumno)
+                    .setParameter("fecha", diaHoy)
+                    .getResultList();
 
             return !pedidos.isEmpty();
         } catch (NoResultException e) {
@@ -75,7 +75,7 @@ public class PedidoDAO {
     }
 
     public List<Pedido> getPaginated(int page, int offset, HashMap<String, String> filtros) {
-        try (Session session = HibernateConnection.getSessionFactory().openSession()){
+        try (Session session = HibernateConnection.getSessionFactory().openSession()) {
             StringBuilder hql = new StringBuilder("FROM Pedido p WHERE true");
 
             if (filtros != null) {
@@ -87,9 +87,8 @@ public class PedidoDAO {
                         case "fecha" -> hql.append(" AND p.fecha = :").append(key);
                     }
                 }
-
-                hql.append(" ORDER BY CASE WHEN p.fechaRetirada IS NULL THEN 0 ELSE 1 END, p.fecha DESC");
             }
+            hql.append(" ORDER BY CASE WHEN p.fechaRetirada IS NULL THEN 0 ELSE 1 END, p.fecha DESC");
 
             Query<Pedido> query = session.createQuery(hql.toString(), Pedido.class);
 
@@ -97,8 +96,10 @@ public class PedidoDAO {
                 for (HashMap.Entry<String, String> filtro : filtros.entrySet()) {
                     switch (filtro.getKey()) {
                         case "nombre" -> query.setParameter(filtro.getKey(), "%" + filtro.getValue() + "%");
-                        case "tipo" -> query.setParameter(filtro.getKey(), TipoBocadillo.valueOf(TipoBocadillo.class, filtro.getValue()));
-                        case "curso" -> query.setParameter(filtro.getKey(), cursoService.getCursoByName(filtro.getValue()));
+                        case "tipo" ->
+                                query.setParameter(filtro.getKey(), TipoBocadillo.valueOf(TipoBocadillo.class, filtro.getValue()));
+                        case "curso" ->
+                                query.setParameter(filtro.getKey(), cursoService.getCursoByName(filtro.getValue()));
                         case "fecha" -> query.setParameter(filtro.getKey(), LocalDate.parse(filtro.getValue()));
                     }
                 }
@@ -113,13 +114,13 @@ public class PedidoDAO {
     }
 
     public long countPedidos(HashMap<String, String> filtros) {
-        try (Session session = HibernateConnection.getSessionFactory().openSession()){
-            StringBuilder hql = new StringBuilder("SELECT COUNT(p) FROM Pedido p WHERE true");
+        try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+            StringBuilder hql = new StringBuilder("SELECT COUNT(*) FROM Pedido p WHERE true");
 
             if (filtros != null) {
                 for (String key : filtros.keySet()) {
                     switch (key) {
-                        case "nombre" -> hql.append(" AND p.alumno.nombre like :").append(key);
+                        case "nombre" -> hql.append(" AND p.alumno.nombre = :").append(key);
                         case "tipo" -> hql.append(" AND p.bocadillo.tipo = :").append(key);
                         case "curso" -> hql.append(" AND p.alumno.curso = :").append(key);
                         case "fecha" -> hql.append(" AND p.fecha = :").append(key);
@@ -139,6 +140,11 @@ public class PedidoDAO {
                     }
                 }
             }
+
+
+            System.out.println("query" + hql);
+            System.out.println(query.getSingleResult().toString());
+
 
             return query.getSingleResult();
         }
