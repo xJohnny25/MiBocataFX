@@ -4,11 +4,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.example.mibocatafx.HelloApplication;
 import org.example.mibocatafx.models.Bocata;
 import org.example.mibocatafx.models.Curso;
 import org.example.mibocatafx.models.Pedido;
@@ -16,6 +20,7 @@ import org.example.mibocatafx.service.BocataService;
 import org.example.mibocatafx.service.CursoService;
 import org.example.mibocatafx.service.PedidoService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -286,5 +291,24 @@ public class CocinaController implements Initializable {
         pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
 
         resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+    }
+
+    @FXML
+    public void logOut() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/loginScreen.fxml"));
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Login - Bocadillos");
+            stage.setMaximized(true);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Error al cargar la escena");
+        }
+
+        Stage anteriorVentana = (Stage) table.getScene().getWindow();
+        anteriorVentana.close();
     }
 }
