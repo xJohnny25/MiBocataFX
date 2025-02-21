@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.mibocatafx.HelloApplication;
 import org.example.mibocatafx.models.Usuario;
-import org.example.mibocatafx.service.AlumnoService;
 import org.example.mibocatafx.service.UsuarioService;
 
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class LoginController {
             break;
 
             case "admin":
-                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/admin.fxml"));
+                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/adminAlumnoCrud.fxml"));
                 scene = new Scene(fxmlLoader.load());
 
                 stage = new Stage();

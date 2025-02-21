@@ -25,9 +25,6 @@ import java.util.ResourceBundle;
 
 public class CocinaController implements Initializable {
     @FXML
-    private HBox logOutButton; //TODO -> crear método cerrar sesión
-
-    @FXML
     private TextField nameInput;
 
     @FXML
@@ -38,9 +35,6 @@ public class CocinaController implements Initializable {
 
     @FXML
     private DatePicker calendarInput;
-
-    @FXML
-    private Button searchButton;
 
     @FXML
     private TableView table;
@@ -65,9 +59,6 @@ public class CocinaController implements Initializable {
 
     @FXML
     private Label resultsCount;
-
-    @FXML
-    private Button clearFiltersButton;
 
     PedidoService pedidoService = new PedidoService();
 
@@ -94,7 +85,7 @@ public class CocinaController implements Initializable {
                         super.updateItem(item, empty);
 
                         if (empty) {
-                            setGraphic(null); // No mostrar el botón si la celda está vacía
+                            setGraphic(null);
                         } else {
                             // Obtener el pedido correspondiente a la fila actual
                             Pedido pedido = getTableView().getItems().get(getIndex());
