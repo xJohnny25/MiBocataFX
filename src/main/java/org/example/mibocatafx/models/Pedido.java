@@ -44,6 +44,20 @@ public class Pedido {
 
     public Pedido() {}
 
+    public Pedido(int id, Alumno alumno, Bocata bocadillo, LocalDateTime fechaRetirada, LocalDate fecha, double precioFinal, Descuento descuento) {
+        this.id = id;
+        this.alumno = alumno;
+        this.bocadillo = bocadillo;
+        this.fechaRetirada = fechaRetirada;
+        this.fecha = fecha;
+        this.precioFinal = precioFinal;
+        this.descuento = descuento;
+    }
+
+    public Pedido(int id, Alumno alumno, Bocata bocadillo, Object o, LocalDate fecha, double precio, Object o1) {
+
+    }
+
     public int getId() {
         return id;
     }

@@ -77,7 +77,6 @@ public class ChooseSandwichController {
 
         // Comprobamos si el alumno ya tiene un pedido
         pedidoExistente = pedidoService.getPedidoHoy(alumno);
-        System.out.println(pedidoExistente.getBocadillo().getNombre());
 
         if (pedidoExistente != null) {
             // Si ya tiene un pedido, actualizamos el bocadillo
@@ -91,6 +90,7 @@ public class ChooseSandwichController {
                 return;
             } else {
                 Pedido pedidoNuevo = new Pedido(
+                        pedidoExistente.getId(),
                         pedidoExistente.getAlumno(),
                         bocadillo,
                         null,
@@ -117,7 +117,7 @@ public class ChooseSandwichController {
         if (pedidoActual == null) {
             System.out.println("No hay bocadillo seleccionado.");
             return;
-        } else if (pedidoActual.getBocadillo().getNombre().equals(pedidoExistente.getBocadillo().getNombre())) {
+        } else if (pedidoExistente != null && pedidoActual.getBocadillo().getNombre().equals(pedidoExistente.getBocadillo().getNombre())) {
             mostrarAlerta("Pedido ya existente", "Ya tienes un pedido creado con este bocadillo", Alert.AlertType.INFORMATION);
             return;
         }
