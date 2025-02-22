@@ -1,10 +1,8 @@
 package org.example.mibocatafx.models;
 
 import jakarta.persistence.*;
-import org.example.mibocatafx.models.Usuario;
-import org.example.mibocatafx.models.Curso;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -26,7 +24,7 @@ public class Alumno {
     private Curso curso;
 
     @Column(name = "fecha_baja")
-    private Date fechaBaja;
+    private LocalDate fechaBaja;
 
     @Column(name = "motivo_baja")
     private String motivoBaja;
@@ -34,7 +32,7 @@ public class Alumno {
     @ManyToMany(mappedBy = "alumnos")
     private List<Descuento> descuentos;
 
-    public Alumno(String motivoBaja, Date fechaBaja, Curso curso, Usuario usuario, String nombre, int id) {
+    public Alumno(String motivoBaja, LocalDate fechaBaja, Curso curso, Usuario usuario, String nombre, int id) {
         this.motivoBaja = motivoBaja;
         this.fechaBaja = fechaBaja;
         this.curso = curso;
@@ -73,10 +71,10 @@ public class Alumno {
         this.curso = curso;
     }
 
-    public Date getFechaBaja() {
+    public LocalDate getFechaBaja() {
         return fechaBaja;
     }
-    public void setFechaBaja(Date fechaBaja) {
+    public void setFechaBaja(LocalDate fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

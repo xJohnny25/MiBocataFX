@@ -30,11 +30,23 @@ public class AlumnoService {
         return false;
     }
 
+    public List<Alumno> getAll() {
+        return alumnoDAO.getAll();
+    }
+
     public Alumno getAlumnoByUsuario(Usuario usuario) {
         if (usuario == null) {
             throw new IllegalArgumentException("Usuario no encontrado");
         }
 
         return alumnoDAO.getAlumnoByUsuario(usuario);
+    }
+
+    public void update(Alumno alumno) {
+        alumnoDAO.update(alumno);
+    }
+
+    public void delete(Alumno alumno) {
+        alumnoDAO.delete(alumno);
     }
 }
