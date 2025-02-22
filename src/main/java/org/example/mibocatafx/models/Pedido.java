@@ -54,10 +54,6 @@ public class Pedido {
         this.descuento = descuento;
     }
 
-    public Pedido(int id, Alumno alumno, Bocata bocadillo, Object o, LocalDate fecha, double precio, Object o1) {
-
-    }
-
     public int getId() {
         return id;
     }
