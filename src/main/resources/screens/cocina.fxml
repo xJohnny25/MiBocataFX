@@ -28,7 +28,7 @@
                </ImageView>
             <HBox fx:id="logOutButton" alignment="BOTTOM_RIGHT" layoutX="499.0" layoutY="18.0" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="18.0">
                <children>
-                  <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 10;" text="Cerrar Sesión" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 10;" text="Cerrar Sesión" textFill="WHITE">
                      <padding>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                      </padding>
