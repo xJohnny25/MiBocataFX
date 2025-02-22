@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="801.0" stylesheets="@../css/adminStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="801.0" stylesheets="@../css/adminStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.mibocatafx.controllers.AdminAlumnosCrudController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="150.0" BorderPane.alignment="CENTER">
          <children>
@@ -82,7 +82,7 @@
                   </VBox>
                </children>
             </VBox>
-            <Button id="logOutButton" layoutY="551.0" mnemonicParsing="false" text="Cerrar Sesión" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+            <Button id="logOutButton" fx:id="logOutButton" layoutY="551.0" mnemonicParsing="false" onAction="#logOut" text="Cerrar Sesión" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" />
          </children>
       </AnchorPane>
    </left>
@@ -105,13 +105,13 @@
                            <children>
                               <HBox id="filtersBox" prefHeight="25.0" spacing="15.0">
                                  <children>
-                                    <TextField prefHeight="25.0" prefWidth="100.0" promptText="Nombre...">
+                                    <TextField fx:id="nameInput" prefHeight="25.0" prefWidth="100.0" promptText="Nombre...">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField prefWidth="100.0" promptText="Correo..." />
-                                    <ComboBox promptText="Curso">
+                                    <TextField fx:id="emailInput" prefWidth="100.0" promptText="Correo..." />
+                                    <ComboBox fx:id="cursesBox" promptText="Curso">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -119,11 +119,11 @@
                                  </children>
                               </HBox>
                               <Region prefHeight="25.0" HBox.hgrow="ALWAYS" />
-                              <HBox id="addButton" accessibleRole="BUTTON" alignment="CENTER" prefHeight="100.0" spacing="5.0">
+                              <HBox id="addButton" fx:id="addNewAlumnoButton" accessibleRole="BUTTON" alignment="CENTER" prefHeight="100.0" spacing="5.0">
                                  <children>
                                     <ImageView fitHeight="150.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../assets/circle-plus%20(1).png" />
+                                          <Image url="@../assets/circle-plus-white.png" />
                                        </image>
                                     </ImageView>
                                     <Label id="addLabel" text="Añadir alumno" textFill="WHITE" />
@@ -140,14 +140,14 @@
             </AnchorPane>
          </top>
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                  <TableColumn prefWidth="75.0" text="Id" />
-                <TableColumn prefWidth="75.0" text="Nombre" />
-                <TableColumn prefWidth="75.0" text="Correo" />
-                  <TableColumn prefWidth="75.0" text="Curso" />
-                  <TableColumn prefWidth="75.0" text="Estado" />
-                  <TableColumn prefWidth="75.0" text="Acciones" />
+                  <TableColumn fx:id="idTableColumn" prefWidth="75.0" text="Id" />
+                <TableColumn fx:id="nameTableColumn" prefWidth="75.0" text="Nombre" />
+                <TableColumn fx:id="mailTableColumn" prefWidth="75.0" text="Correo" />
+                  <TableColumn fx:id="curseTableColumn" prefWidth="75.0" text="Curso" />
+                  <TableColumn fx:id="stateTableColumn" prefWidth="75.0" text="Estado" />
+                  <TableColumn fx:id="actionsTableColumn" prefWidth="75.0" text="Acciones" />
               </columns>
                <BorderPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
