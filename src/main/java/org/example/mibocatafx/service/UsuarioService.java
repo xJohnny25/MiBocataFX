@@ -13,4 +13,8 @@ public class UsuarioService {
 
         return usuarioDAO.getUsuarioByMail(mail, password);
     }
+
+    public void update(Usuario usuario) {
+        usuarioDAO.update(usuario);
+    }
 }
