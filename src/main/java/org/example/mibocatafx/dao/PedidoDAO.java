@@ -105,7 +105,6 @@ public class PedidoDAO {
                 }
             }
 
-
             query.setFirstResult((page - 1) * offset);
             query.setMaxResults(offset);
 
@@ -141,10 +140,88 @@ public class PedidoDAO {
                 }
             }
 
-
             System.out.println("query" + hql);
             System.out.println(query.getSingleResult().toString());
 
+            return query.getSingleResult();
+        }
+    }
+
+    public long countPedidosCalientes(HashMap<String, String> filtros) {
+        try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+            StringBuilder hql = new StringBuilder("SELECT COUNT(*) FROM Pedido p WHERE true");
+
+            if (filtros != null) {
+                for (String key : filtros.keySet()) {
+                    switch (key) {
+                        case "nombre" -> hql.append(" AND p.alumno.nombre = :").append(key);
+                        case "curso" -> hql.append(" AND p.alumno.curso = :").append(key);
+                        case "fecha" -> hql.append(" AND p.fecha = :").append(key);
+                    }
+                }
+                hql.append(" AND p.bocadillo.tipo = :tipo");
+            } else {
+                hql.append(" AND p.bocadillo.tipo = :tipo");
+            }
+
+            Query<Long> query = session.createQuery(hql.toString(), Long.class);
+
+            if (filtros != null) {
+                for (HashMap.Entry<String, String> filtro : filtros.entrySet()) {
+                    switch (filtro.getKey()) {
+                        case "nombre" -> query.setParameter(filtro.getKey(), filtro.getValue());
+                        case "curso" -> query.setParameter(filtro.getKey(), cursoService.getCursoByName(filtro.getValue()));
+                        case "fecha" -> query.setParameter(filtro.getKey(), LocalDate.parse(filtro.getValue()));
+                    }
+                }
+                query.setParameter("tipo", TipoBocadillo.caliente);
+            } else {
+                query.setParameter("tipo", TipoBocadillo.caliente);
+            }
+
+            System.out.println("query" + hql);
+            System.out.println("calientes: " + query.getSingleResult().toString());
+
+            return query.getSingleResult();
+        }
+    }
+
+    public long countPedidosFrios(HashMap<String, String> filtros) {
+        try (Session session = HibernateConnection.getSessionFactory().openSession()) {
+            StringBuilder hql = new StringBuilder("SELECT COUNT(*) FROM Pedido p WHERE true");
+
+            if (filtros != null) {
+                for (String key : filtros.keySet()) {
+                    switch (key) {
+                        case "nombre" -> hql.append(" AND p.alumno.nombre = :").append(key);
+                        case "tipo" -> hql.append(" AND p.bocadillo.tipo = :").append(key);
+                        case "curso" -> hql.append(" AND p.alumno.curso = :").append(key);
+                        case "fecha" -> hql.append(" AND p.fecha = :").append(key);
+                    }
+                }
+                hql.append(" AND p.bocadillo.tipo = :tipo");
+            } else {
+                hql.append(" AND p.bocadillo.tipo = :tipo");
+            }
+
+            Query<Long> query = session.createQuery(hql.toString(), Long.class);
+
+            if (filtros != null) {
+                for (HashMap.Entry<String, String> filtro : filtros.entrySet()) {
+                    switch (filtro.getKey()) {
+                        case "nombre" -> query.setParameter(filtro.getKey(), filtro.getValue());
+                        case "tipo" -> query.setParameter(filtro.getKey(), TipoBocadillo.valueOf(TipoBocadillo.class, filtro.getValue()));
+                        case "curso" -> query.setParameter(filtro.getKey(), cursoService.getCursoByName(filtro.getValue()));
+                        case "fecha" -> query.setParameter(filtro.getKey(), LocalDate.parse(filtro.getValue()));
+                    }
+                }
+                query.setParameter("tipo", TipoBocadillo.frio);
+            } else {
+                query.setParameter("tipo", TipoBocadillo.frio);
+            }
+
+            System.out.println("query" + hql);
+            System.out.println("frios: " + query.getSingleResult().toString());
 
             return query.getSingleResult();
         }

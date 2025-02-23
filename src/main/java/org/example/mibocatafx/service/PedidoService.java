@@ -49,4 +49,12 @@ public class PedidoService {
 
         pedidoDAO.updateFechaRetirada(pedido);
     }
+
+    public long countPedidosCalientes(HashMap<String, String> filtros) {
+        return pedidoDAO.countPedidosCalientes(filtros);
+    }
+
+    public long countPedidosFrios(HashMap<String, String> filtros) {
+        return pedidoDAO.countPedidosFrios(filtros);
+    }
 }

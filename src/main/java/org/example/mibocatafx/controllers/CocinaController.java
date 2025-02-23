@@ -58,6 +58,12 @@ public class CocinaController implements Initializable {
     private TableColumn tableCompleteOrderColumn;
 
     @FXML
+    private TextField calientesCount;
+
+    @FXML
+    private TextField friosCount;
+
+    @FXML
     private Label pagesCount;
 
     @FXML
@@ -166,13 +172,28 @@ public class CocinaController implements Initializable {
             tipeBox.getItems().add(bocata.getTipo().name());
         }
 
+        calendarInput.setValue(LocalDate.now());
+
         PedidoService pedidoService = new PedidoService();
         List<Pedido> pedidos = pedidoService.getPaginated(1, offset, null);
         rellenarTabla(pedidos);
 
+        long pedidosCalientes = pedidoService.countPedidosCalientes(null);
+        calientesCount.setText(String.valueOf(pedidosCalientes));
+
+        long pedidosFrios = pedidoService.countPedidosFrios(null);
+        friosCount.setText(String.valueOf(pedidosFrios));
+
+        int firstRow = ((currentPage - 1) * offset) + 1;
+        long lastRow = Math.min((long) currentPage * offset, totalPedidos);
+
         pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
 
-        resultsCount.setText("1 - " + offset + " de " + totalPedidos);
+        if (totalPedidos < lastRow) {
+            resultsCount.setText(firstRow + " - " + totalPedidos + " de " + totalPedidos);
+        } else {
+            resultsCount.setText(firstRow + " - " + lastRow + " de " + totalPedidos);
+        }
     }
 
     @FXML
@@ -238,6 +259,12 @@ public class CocinaController implements Initializable {
             filtros.put("fecha", calendarInput.getValue().toString());
         }
 
+        long pedidosCalientes = pedidoService.countPedidosCalientes(filtros);
+        calientesCount.setText(String.valueOf(pedidosCalientes));
+
+        long pedidosFrios = pedidoService.countPedidosFrios(filtros);
+        friosCount.setText(String.valueOf(pedidosFrios));
+
         PedidoService pedidoService = new PedidoService();
         List<Pedido> pedidos = pedidoService.getPaginated(currentPage, offset, filtros);
         rellenarTabla(pedidos);
@@ -246,10 +273,13 @@ public class CocinaController implements Initializable {
         int firstRow = ((currentPage - 1) * offset) + 1;
         long lastRow = Math.min((long) currentPage * offset, totalPedidos);
 
-
         pagesCount.setText(currentPage + " / " + (int) Math.ceil((float)totalPedidos/(float)offset));
 
-        resultsCount.setText(firstRow + " - " + lastRow + " de " + totalPedidos);
+        if (totalPedidos < lastRow) {
+            resultsCount.setText(firstRow + " - " + totalPedidos + " de " + totalPedidos);
+        } else {
+            resultsCount.setText(firstRow + " - " + lastRow + " de " + totalPedidos);
+        }
     }
 
     @FXML
@@ -273,9 +303,14 @@ public class CocinaController implements Initializable {
         rellenarTabla(pedidos);
         totalPedidos = pedidoService.countPedidos(filtros);
 
+        long pedidosCalientes = pedidoService.countPedidosCalientes(null);
+        calientesCount.setText(String.valueOf(pedidosCalientes));
+
+        long pedidosFrios = pedidoService.countPedidosFrios(null);
+        friosCount.setText(String.valueOf(pedidosFrios));
+
         int firstRow = ((currentPage - 1) * offset) + 1;
         long lastRow = Math.min((long) currentPage * offset, totalPedidos);
-
 
         pagesCount.setText(currentPage + " / " + (int) Math.ceil((float) totalPedidos / (float) offset));
 

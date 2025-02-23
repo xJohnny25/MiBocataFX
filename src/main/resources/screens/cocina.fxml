@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.mibocatafx.controllers.CocinaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="878.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.mibocatafx.controllers.CocinaController">
    <top>
        <AnchorPane style="-fx-background-color: #25A4F4;">
            <children>
@@ -99,6 +99,27 @@
                </columnResizePolicy>
             </TableView>
          </center>
+         <bottom>
+            <AnchorPane prefHeight="75.0" prefWidth="848.0" style="-fx-background-color: #25A4F4;" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </BorderPane.margin>
+               <children>
+                  <Label layoutX="241.0" layoutY="14.0" text="Calientes:" textFill="WHITE" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="241.0" AnchorPane.rightAnchor="548.0" AnchorPane.topAnchor="14.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="592.0" layoutY="16.0" text="Frios:" textFill="WHITE" AnchorPane.bottomAnchor="41.0" AnchorPane.rightAnchor="241.0" AnchorPane.topAnchor="14.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="calientesCount" alignment="CENTER" editable="false" layoutX="196.0" layoutY="38.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="196.0" AnchorPane.topAnchor="38.0" />
+                  <TextField fx:id="friosCount" alignment="CENTER" editable="false" layoutX="516.0" layoutY="38.0" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="38.0" />
+               </children>
+            </AnchorPane>
+         </bottom>
       </BorderPane>
    </center>
    <bottom>
