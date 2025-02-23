@@ -12,8 +12,10 @@ import org.example.mibocatafx.service.AlumnoService;
 import org.example.mibocatafx.service.UsuarioService;
 
 import java.io.IOException;
+import java.util.AbstractList;
 
 public class LoginController {
+    private final AlumnoService alumnoService = new AlumnoService();
     private Usuario usuario;
     
     @FXML
@@ -82,13 +84,19 @@ public class LoginController {
             break;
 
             case "admin":
-                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/admin.fxml"));
+                fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/adminAlumnoCrud.fxml"));
                 scene = new Scene(fxmlLoader.load());
+
+                AdminAlumnosCrudController adminAlumnosCrudController = fxmlLoader.getController();
 
                 stage = new Stage();
                 stage.setTitle("Selección Bocadillo");
                 stage.setMaximized(true);
                 stage.setScene(scene);
+
+                stage.setOnShown(windowEvent -> {
+                    adminAlumnosCrudController.initializeInfo();
+                });
 
                 stage.show();
             break;

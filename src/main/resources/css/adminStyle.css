@@ -1,0 +1,81 @@
+#leftBox {
+    -fx-background-color: #25A4F4;
+}
+
+#borderPaneBackground {
+    -fx-background-color: white;
+}
+
+.button {
+    -fx-cursor: hand;
+    -fx-background-color: #25A4F4;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+}
+
+#addButton {
+    -fx-cursor: hand;
+    -fx-background-color: #25A4F4;
+    -fx-text-fill: white;
+    -fx-padding: 5 10;
+    -fx-background-radius: 6;
+}
+
+#addButton:hover {
+    -fx-background-color: #0086DB;
+}
+
+#addLabel {
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+}
+
+.leftButton {
+    -fx-background-color: trasnparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.2em;
+}
+
+.leftButton:hover {
+    -fx-background-color: #0086DB;
+}
+
+#filtersBox {
+    -fx-border-color: #25A4F4;
+    -fx-border-radius: 6;
+    -fx-padding: 5 8;
+}
+
+#logOutButton {
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+    -fx-background-radius: 10;
+    -fx-background-insets: 0;
+}
+
+#logOutButton:hover {
+    -fx-background-color: #0086DB;
+}
+
+.text-field {
+    -fx-border-color: #25A4F4;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-background-insets: 1;
+}
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #25A4F4;
+    -fx-border-radius: 7;
+}
+
+#clearFiltersButton {
+    -fx-text-fill: #25A4F4;
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8;
+}

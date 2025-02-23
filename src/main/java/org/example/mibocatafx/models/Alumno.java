@@ -1,10 +1,8 @@
 package org.example.mibocatafx.models;
 
 import jakarta.persistence.*;
-import org.example.mibocatafx.models.Usuario;
-import org.example.mibocatafx.models.Curso;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,12 +19,12 @@ public class Alumno {
     @JoinColumn(name = "id_usuario", nullable = false, referencedColumnName = "id")
     private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_curso", nullable = false, referencedColumnName = "nombre")
     private Curso curso;
 
     @Column(name = "fecha_baja")
-    private Date fechaBaja;
+    private LocalDate fechaBaja;
 
     @Column(name = "motivo_baja")
     private String motivoBaja;
@@ -34,13 +32,12 @@ public class Alumno {
     @ManyToMany(mappedBy = "alumnos")
     private List<Descuento> descuentos;
 
-    public Alumno(String motivoBaja, Date fechaBaja, Curso curso, Usuario usuario, String nombre, int id) {
-        this.motivoBaja = motivoBaja;
-        this.fechaBaja = fechaBaja;
-        this.curso = curso;
-        this.usuario = usuario;
+    public Alumno(String nombre, Usuario usuario, Curso curso, LocalDate fechaBaja, String motivoBaja) {
         this.nombre = nombre;
-        this.id = id;
+        this.usuario = usuario;
+        this.curso = curso;
+        this.fechaBaja = fechaBaja;
+        this.motivoBaja = motivoBaja;
     }
 
     public Alumno() {}
@@ -73,10 +70,10 @@ public class Alumno {
         this.curso = curso;
     }
 
-    public Date getFechaBaja() {
+    public LocalDate getFechaBaja() {
         return fechaBaja;
     }
-    public void setFechaBaja(Date fechaBaja) {
+    public void setFechaBaja(LocalDate fechaBaja) {
         this.fechaBaja = fechaBaja;
     }
 

@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.example.mibocatafx.HelloApplication;
@@ -23,15 +22,11 @@ import org.example.mibocatafx.service.PedidoService;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class CocinaController implements Initializable {
-    @FXML
-    private HBox logOutButton; //TODO -> crear método cerrar sesión
-
     @FXML
     private TextField nameInput;
 
@@ -43,9 +38,6 @@ public class CocinaController implements Initializable {
 
     @FXML
     private DatePicker calendarInput;
-
-    @FXML
-    private Button searchButton;
 
     @FXML
     private TableView table;
@@ -70,9 +62,6 @@ public class CocinaController implements Initializable {
 
     @FXML
     private Label resultsCount;
-
-    @FXML
-    private Button clearFiltersButton;
 
     PedidoService pedidoService = new PedidoService();
 
@@ -99,7 +88,7 @@ public class CocinaController implements Initializable {
                         super.updateItem(item, empty);
 
                         if (empty) {
-                            setGraphic(null); // No mostrar el botón si la celda está vacía
+                            setGraphic(null);
                         } else {
                             // Obtener el pedido correspondiente a la fila actual
                             Pedido pedido = getTableView().getItems().get(getIndex());
@@ -183,7 +172,7 @@ public class CocinaController implements Initializable {
 
         pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
 
-        resultsCount.setText("1/" + offset + " de " + totalPedidos);
+        resultsCount.setText("1 - " + offset + " de " + totalPedidos);
     }
 
     @FXML
@@ -201,9 +190,9 @@ public class CocinaController implements Initializable {
             int firstRow = ((currentPage - 1) * offset) + 1;
             long lastRow = Math.min((long) currentPage * offset, totalPedidos);
 
-            pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+            pagesCount.setText(currentPage + " / " + (int) Math.ceil((float) totalPedidos / (float) offset));
 
-            resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+            resultsCount.setText(firstRow + " - " + lastRow + " de " + totalPedidos);
         }
     }
 
@@ -222,9 +211,9 @@ public class CocinaController implements Initializable {
             int firstRow = ((currentPage - 1) * offset) + 1;
             long lastRow = Math.min((long) currentPage * offset, totalPedidos);
 
-            pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+            pagesCount.setText(currentPage + " / " + (int) Math.ceil((float) totalPedidos / (float) offset));
 
-            resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+            resultsCount.setText(firstRow + " - " + lastRow + " de " + totalPedidos);
         }
     }
 
@@ -250,7 +239,7 @@ public class CocinaController implements Initializable {
         }
 
         PedidoService pedidoService = new PedidoService();
-        List<Pedido> pedidos = pedidoService.getPaginated(1, offset, filtros);
+        List<Pedido> pedidos = pedidoService.getPaginated(currentPage, offset, filtros);
         rellenarTabla(pedidos);
         totalPedidos = pedidoService.countPedidos(filtros);
 
@@ -258,9 +247,9 @@ public class CocinaController implements Initializable {
         long lastRow = Math.min((long) currentPage * offset, totalPedidos);
 
 
-        pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float)totalPedidos/(float)offset)));
+        pagesCount.setText(currentPage + " / " + (int) Math.ceil((float)totalPedidos/(float)offset));
 
-        resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+        resultsCount.setText(firstRow + " - " + lastRow + " de " + totalPedidos);
     }
 
     @FXML
@@ -288,27 +277,28 @@ public class CocinaController implements Initializable {
         long lastRow = Math.min((long) currentPage * offset, totalPedidos);
 
 
-        pagesCount.setText(currentPage + " / " + Math.round(Math.ceil((float) totalPedidos / (float) offset)));
+        pagesCount.setText(currentPage + " / " + (int) Math.ceil((float) totalPedidos / (float) offset));
 
-        resultsCount.setText(firstRow + " / " + lastRow + " de " + totalPedidos);
+        resultsCount.setText(firstRow + " - " + lastRow + " de " + totalPedidos);
     }
 
-    @FXML
     public void logOut() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/loginScreen.fxml"));
 
         try {
             Scene scene = new Scene(fxmlLoader.load());
+
             Stage stage = new Stage();
-            stage.setTitle("Login - Bocadillos");
+            stage.setTitle("Selección Bocadillo");
             stage.setMaximized(true);
             stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.out.println("Error al cargar la escena");
-        }
 
-        Stage anteriorVentana = (Stage) table.getScene().getWindow();
-        anteriorVentana.close();
+            stage.show();
+
+            Stage anteriorVentana = (Stage) nameInput.getScene().getWindow();
+            anteriorVentana.close();
+        } catch (IOException e) {
+            System.out.println("No se ha podido cerrar sesión");
+        }
     }
 }

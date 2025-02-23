@@ -4,8 +4,33 @@ import jakarta.persistence.Query;
 import org.example.mibocatafx.models.Usuario;
 import org.example.mibocatafx.util.HibernateConnection;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class UsuarioDAO {
+    public void add(Usuario usuario) {
+        Transaction tx;
+
+        try (Session session = HibernateConnection.getSessionFactory().openSession()){
+            tx = session.beginTransaction();
+
+            session.persist(usuario);
+
+            tx.commit();
+        }
+    }
+
+    public void update(Usuario usuario) {
+        Transaction tx;
+
+        try (Session session = HibernateConnection.getSessionFactory().openSession()){
+            tx = session.beginTransaction();
+
+            session.merge(usuario);
+
+            tx.commit();
+        }
+    }
+
     public Usuario getUsuarioByMail(String mail, String password) {
         try (Session session = HibernateConnection.getSessionFactory().openSession()){
             Query query = session.createQuery("from Usuario u where u.correo = :correo and u.contrasena = :password");
