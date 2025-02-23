@@ -7,6 +7,18 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class UsuarioDAO {
+    public void add(Usuario usuario) {
+        Transaction tx;
+
+        try (Session session = HibernateConnection.getSessionFactory().openSession()){
+            tx = session.beginTransaction();
+
+            session.persist(usuario);
+
+            tx.commit();
+        }
+    }
+
     public void update(Usuario usuario) {
         Transaction tx;
 

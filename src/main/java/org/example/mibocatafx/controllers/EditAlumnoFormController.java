@@ -15,7 +15,7 @@ import org.example.mibocatafx.service.UsuarioService;
 import java.time.LocalDate;
 import java.util.List;
 
-public class FormController {
+public class EditAlumnoFormController {
     private final UsuarioService usuarioService = new UsuarioService();
     private final AlumnoService alumnoService = new AlumnoService();
     private final CursoService cursoService = new CursoService();
@@ -35,17 +35,13 @@ public class FormController {
     private ComboBox<String> stateBox;
 
     @FXML
-    private TextArea dropReasonText;
+    private TextArea deactivateReasonText;
 
     public void initializeInfo() {
         alumnoNameInput.setText(alumno.getNombre());
         alumnoMailInput.setText(alumno.getUsuario().getCorreo());
 
         cursesBox.setValue(alumno.getCurso().getNombre());
-        List<Curso> cursos = cursoService.getAll();
-        for (Curso curso : cursos) {
-            cursesBox.getItems().add(curso.getNombre());
-        }
 
         if (alumno.getFechaBaja() == null) {
             stateBox.setValue("Activo");
@@ -53,39 +49,49 @@ public class FormController {
             stateBox.setValue("Inactivo");
         }
 
+        List<Curso> cursos = cursoService.getAll();
+        for (Curso curso : cursos) {
+            cursesBox.getItems().add(curso.getNombre());
+        }
+
         stateBox.getItems().addAll("Activo", "Inactivo");
 
         stateBox.setOnAction(event -> {
             String value = stateBox.getValue();
 
-            dropReasonText.setDisable(!"Inactivo".equals(value));
+            deactivateReasonText.setDisable(!"Inactivo".equals(value));
         });
 
         usuario = alumno.getUsuario();
     }
 
-    public void saveChanges() {
+    public void editAlumno() {
         String alumnoName = alumno.getNombre();
         String alumnoMail = usuario.getCorreo();
         String alumnoCurse = cursoService.getCursoByName(alumno.getCurso().getNombre()).getNombre();
 
-        if (!this.alumnoNameInput.getText().equals(alumnoName)) {
-            alumno.setNombre(this.alumnoNameInput.getText());
+        if (!alumnoNameInput.getText().isEmpty() && !alumnoNameInput.getText().equals(alumnoName)) {
+            alumno.setNombre(alumnoNameInput.getText());
         }
 
-        if (!alumnoMailInput.getText().equals(alumnoMail)) {
+        if (!alumnoMail.isEmpty() && !alumnoMailInput.getText().equals(alumnoMail)) {
             alumno.getUsuario().setCorreo(alumnoMailInput.getText());
 
             usuarioService.update(alumno.getUsuario());
         }
 
-        if (!cursesBox.getValue().equals(alumnoCurse)) {
+        if (!cursesBox.getValue().isEmpty() && !cursesBox.getValue().equals(alumnoCurse)) {
             alumno.setCurso(cursoService.getCursoByName(cursesBox.getValue()));
         }
 
-        if (!dropReasonText.isDisabled()) {
+        if (!deactivateReasonText.isDisabled() && !deactivateReasonText.getText().isEmpty()) {
             alumno.setFechaBaja(LocalDate.now());
-            alumno.setMotivoBaja(dropReasonText.getText());
+            alumno.setMotivoBaja(deactivateReasonText.getText());
+        }
+
+        if (!stateBox.getValue().isEmpty() && stateBox.getValue().equals("Activo")) {
+            alumno.setFechaBaja(null);
+            alumno.setMotivoBaja(null);
         }
 
         alumnoService.update(alumno);

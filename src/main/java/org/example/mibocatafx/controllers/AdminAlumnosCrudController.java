@@ -13,15 +13,24 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.mibocatafx.HelloApplication;
 import org.example.mibocatafx.models.Alumno;
+import org.example.mibocatafx.models.Curso;
 import org.example.mibocatafx.service.AlumnoService;
-import org.example.mibocatafx.service.UsuarioService;
+import org.example.mibocatafx.service.CursoService;
+
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class AdminAlumnosCrudController {
     private final AlumnoService alumnoService = new AlumnoService();
-    private final UsuarioService usuarioService = new UsuarioService();
+
+    int offset = 16;
+    int currentPage = 1;
+    private long totalAlumnos = alumnoService.countAlumnos(null);
+    long totalPages = Math.round(Math.ceil((float) totalAlumnos / (float) offset));
+
+    private HashMap<String, String> filtros = new HashMap<>();
 
     @FXML
     private TextField nameInput;
@@ -31,9 +40,6 @@ public class AdminAlumnosCrudController {
 
     @FXML
     private ComboBox<String> cursesBox;
-
-    @FXML
-    private HBox addNewAlumnoButton;
 
     @FXML
     private TableView<Alumno> table;
@@ -57,7 +63,10 @@ public class AdminAlumnosCrudController {
     private TableColumn<Alumno, Void> actionsTableColumn;
 
     @FXML
-    private Button logOutButton;
+    private Label pagesCount;
+
+    @FXML
+    private Label resultsCount;
 
     public void fillTable(List<Alumno> alumnos) {
         try {
@@ -109,12 +118,13 @@ public class AdminAlumnosCrudController {
                         deleteButton.setStyle("-fx-background-radius: 5; -fx-background-color: transparent");
 
                         editButton.setOnMouseClicked(event -> {
-                            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/adminForm.fxml"));
+                            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/editAlumnoForm.fxml"));
 
                             try {
                                 Scene scene = new Scene(fxmlLoader.load(), 400, 520);
 
-                                FormController formController = fxmlLoader.getController();
+                                EditAlumnoFormController editAlumnoFormController = fxmlLoader.getController();
+
 
                                 Stage stage = new Stage();
                                 stage.setTitle("Editar alumno");
@@ -123,11 +133,16 @@ public class AdminAlumnosCrudController {
                                 stage.setScene(scene);
 
                                 stage.setOnShown(windowEvent -> {
-                                    formController.setAlumno(alumnos.get(getIndex()));
-                                    formController.initializeInfo();
+                                    editAlumnoFormController.setAlumno(alumnos.get(getIndex()));
+                                    editAlumnoFormController.initializeInfo();
                                 });
 
                                 stage.show();
+
+                                stage.setOnHidden(hiddenEvent -> {
+                                    table.setItems(FXCollections.observableList(alumnoService.getPaginated(currentPage, offset, filtros)));
+                                    table.refresh();
+                                });
                             } catch (IOException e) {
                                 System.out.println("No se ha pododido cargar el formulario");
                             }
@@ -141,7 +156,8 @@ public class AdminAlumnosCrudController {
                             alert.showAndWait().ifPresent(reponse -> {
                                 if (reponse == ButtonType.YES) {
                                     alumnoService.delete(alumnos.get(getIndex()));
-                                    fillTable(alumnos);
+                                    table.setItems(FXCollections.observableList(alumnoService.getPaginated(currentPage, offset, filtros)));
+                                    table.refresh();
                                 } else {
                                     alert.close();
                                 }
@@ -168,8 +184,145 @@ public class AdminAlumnosCrudController {
         }
     }
 
+    public void initializeInfo() {
+        CursoService cursoService = new CursoService();
+
+        List<Curso> cursos = cursoService.getAll();
+        for(Curso curso : cursos) {
+            cursesBox.getItems().add(curso.getNombre());
+        }
+
+        List<Alumno> alumnos = alumnoService.getPaginated(1, offset, null);
+        fillTable(alumnos);
+
+        pagesCount.setText(currentPage + " / " + (int) Math.ceil((float) totalAlumnos / (float) offset));
+
+        resultsCount.setText("1 - " + offset + " de " + totalAlumnos);
+    }
+
+    @FXML
+    public void nextPage() {
+        totalAlumnos = alumnoService.countAlumnos(filtros);
+        totalPages = Math.round(Math.ceil((float) totalAlumnos / (float) offset));
+
+        if (currentPage < totalPages) {
+            currentPage++;
+
+            List<Alumno> alumnos = alumnoService.getPaginated(currentPage, offset, filtros);
+            fillTable(alumnos);
+
+            int firstRow = ((currentPage - 1) * offset) + 1;
+            long lastRow = Math.min((long) currentPage * offset, totalAlumnos);
+
+            pagesCount.setText(currentPage + " / " + (int) Math.ceil((float) totalAlumnos / (float) offset));
+
+            resultsCount.setText(firstRow + " - " + lastRow + " de " + totalAlumnos);
+        }
+    }
+
+    @FXML
+    public void previusPage() {
+        totalAlumnos = alumnoService.countAlumnos(filtros);
+        totalPages = Math.round(Math.ceil((float) totalAlumnos / (float) offset));
+
+        if (currentPage > 1) {
+            currentPage--;
+
+            List<Alumno> alumnos = alumnoService.getPaginated(currentPage, offset, filtros);
+            fillTable(alumnos);
+
+            int firstRow = ((currentPage - 1) * offset) + 1;
+            long lastRow = Math.min((long) currentPage * offset, totalAlumnos);
+
+            pagesCount.setText(currentPage + " / " + (int) Math.ceil((float) totalAlumnos / (float) offset));
+
+            resultsCount.setText(firstRow + " - " + lastRow + " de " + totalAlumnos);
+        }
+    }
+
+    public void filterTable() {
+        currentPage = 1;
+
+        filtros.clear();
+
+        if (nameInput != null) {
+            filtros.put("nombre", nameInput.getText());
+        }
+
+        if (emailInput != null) {
+            filtros.put("correo", emailInput.getText());
+        }
+
+        if (cursesBox.getValue() != null) {
+            filtros.put("curso", cursesBox.getValue());
+        }
+
+        List<Alumno> alumnos = alumnoService.getPaginated(currentPage, offset, filtros);
+        fillTable(alumnos);
+
+        totalAlumnos = alumnoService.countAlumnos(filtros);
+
+        int firstRow = ((currentPage - 1) * offset) + 1;
+        long lastRow = Math.min((long) currentPage * offset, totalAlumnos);
+
+
+        pagesCount.setText(currentPage + " / " + (int) Math.ceil((float)totalAlumnos/(float)offset));
+
+        resultsCount.setText(firstRow + " - " + lastRow + " de " + totalAlumnos);
+    }
+
+    public void clearFilters() {
+        filtros.clear();
+
+        nameInput.clear();
+        emailInput.clear();
+        cursesBox.setValue(null);
+
+        List<Alumno> alumnos = alumnoService.getPaginated(1, offset, filtros);
+        fillTable(alumnos);
+
+        totalAlumnos = alumnoService.countAlumnos(filtros);
+
+        int firstRow = ((currentPage - 1) * offset) + 1;
+        long lastRow = Math.min((long) currentPage * offset, totalAlumnos);
+
+
+        pagesCount.setText(currentPage + " / " + (int) Math.ceil((float)totalAlumnos/(float)offset));
+
+        resultsCount.setText(firstRow + " - " + lastRow + " de " + totalAlumnos);
+    }
+
+    public void addNewAlumno() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/addNewAlumnoForm.fxml"));
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 400, 620);
+
+            AddNewAlumnoForm addNewAlumnoForm = fxmlLoader.getController();
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar alumno");
+            stage.setMaximized(false);
+            stage.setResizable(false);
+            stage.setScene(scene);
+
+            stage.setOnShown(windowEvent -> addNewAlumnoForm.initializeInfo());
+
+            stage.show();
+
+            stage.setOnHidden(windowEvent -> {
+                table.setItems(FXCollections.observableList(alumnoService.getAll()));
+                table.refresh();
+            });
+        } catch (IOException e) {
+            System.out.println("No se ha pododido cargar el formulario");
+        }
+    }
+
+
+    @FXML
     public void logOut() {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/chooseSandwichScreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/screens/loginScreen.fxml"));
 
         try {
             Scene scene = new Scene(fxmlLoader.load());

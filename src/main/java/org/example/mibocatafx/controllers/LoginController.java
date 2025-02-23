@@ -95,7 +95,7 @@ public class LoginController {
                 stage.setScene(scene);
 
                 stage.setOnShown(windowEvent -> {
-                    adminAlumnosCrudController.fillTable(alumnoService.getAll());
+                    adminAlumnosCrudController.initializeInfo();
                 });
 
                 stage.show();

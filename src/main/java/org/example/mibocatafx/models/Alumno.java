@@ -19,7 +19,7 @@ public class Alumno {
     @JoinColumn(name = "id_usuario", nullable = false, referencedColumnName = "id")
     private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_curso", nullable = false, referencedColumnName = "nombre")
     private Curso curso;
 
@@ -32,13 +32,12 @@ public class Alumno {
     @ManyToMany(mappedBy = "alumnos")
     private List<Descuento> descuentos;
 
-    public Alumno(String motivoBaja, LocalDate fechaBaja, Curso curso, Usuario usuario, String nombre, int id) {
-        this.motivoBaja = motivoBaja;
-        this.fechaBaja = fechaBaja;
-        this.curso = curso;
-        this.usuario = usuario;
+    public Alumno(String nombre, Usuario usuario, Curso curso, LocalDate fechaBaja, String motivoBaja) {
         this.nombre = nombre;
-        this.id = id;
+        this.usuario = usuario;
+        this.curso = curso;
+        this.fechaBaja = fechaBaja;
+        this.motivoBaja = motivoBaja;
     }
 
     public Alumno() {}

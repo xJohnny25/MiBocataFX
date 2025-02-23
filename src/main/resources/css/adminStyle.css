@@ -10,7 +10,7 @@
     -fx-cursor: hand;
     -fx-background-color: #25A4F4;
     -fx-text-fill: white;
-
+    -fx-background-radius: 5;
 }
 
 #addButton {
@@ -71,4 +71,11 @@
     -fx-background-color: white;
     -fx-border-color: #25A4F4;
     -fx-border-radius: 7;
+}
+
+#clearFiltersButton {
+    -fx-text-fill: #25A4F4;
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 8;
 }

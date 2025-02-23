@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="root" prefHeight="520.0" prefWidth="400.0" stylesheets="@../css/formStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.mibocatafx.controllers.FormController">
+<AnchorPane id="root" prefHeight="520.0" prefWidth="400.0" stylesheets="@../css/formStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.mibocatafx.controllers.EditAlumnoFormController">
    <children>
       <Label layoutX="118.0" layoutY="14.0" text="MODIFICAR ALUMNO">
          <font>
@@ -44,7 +44,7 @@
             </VBox>
             <VBox spacing="5.0">
                <children>
-                  <Label fx:id="alumnoCurse" styleClass="formLabel" text="Curso">
+                  <Label styleClass="formLabel" text="Curso">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -54,7 +54,7 @@
             </VBox>
             <VBox spacing="5.0">
                <children>
-                  <Label fx:id="alumnoCurse1" styleClass="formLabel" text="Estado">
+                  <Label styleClass="formLabel" text="Estado">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -64,12 +64,12 @@
             </VBox>
             <VBox layoutX="25.0" layoutY="252.0" spacing="5.0">
                <children>
-                  <Label fx:id="alumnoCurse11" styleClass="formLabel" text="Motivo Baja">
+                  <Label styleClass="formLabel" text="Motivo Baja">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="dropReasonText" disable="true" prefHeight="73.0" prefWidth="350.0" />
+                  <TextArea fx:id="deactivateReasonText" disable="true" prefHeight="73.0" prefWidth="350.0" />
                </children>
             </VBox>
          </children>
@@ -77,7 +77,7 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </VBox>
-      <Button fx:id="saveButton" layoutX="137.0" layoutY="422.0" mnemonicParsing="false" onAction="#saveChanges" text="Guardar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="137.0" AnchorPane.rightAnchor="136.0">
+      <Button fx:id="saveButton" layoutX="137.0" layoutY="422.0" mnemonicParsing="false" onAction="#editAlumno" text="Guardar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="137.0" AnchorPane.rightAnchor="136.0">
          <font>
             <Font size="13.0" />
          </font>
