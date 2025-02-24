@@ -1,13 +1,10 @@
 package org.example.mibocatafx.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.skin.LabeledSkinBase;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.example.mibocatafx.models.Alumno;
 import org.example.mibocatafx.models.Bocata;
@@ -16,19 +13,18 @@ import org.example.mibocatafx.models.Usuario;
 import org.example.mibocatafx.service.AlumnoService;
 import org.example.mibocatafx.service.BocataService;
 import org.example.mibocatafx.service.PedidoService;
+import org.example.mibocatafx.util.TipoBocadillo;
 
-import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public class ChooseSandwichController {
     private final BocataService bocataService = new BocataService();
     private final PedidoService pedidoService = new PedidoService();
     private final AlumnoService alumnoService = new AlumnoService();
     private Usuario usuario;
+    private Alumno alumno;
     private Pedido pedidoActual;
     private Pedido pedidoExistente;
 
@@ -40,6 +36,12 @@ public class ChooseSandwichController {
 
     @FXML
     private VBox bocadilloCaliente;
+
+    @FXML
+    private HBox alergenosFrioBox;
+
+    @FXML
+    private HBox alergenosCalienteBox;
 
     @FXML
     private Label labelBocadilloFrio;
@@ -63,6 +65,23 @@ public class ChooseSandwichController {
     private Label precioCaliente;
 
     public void makeOrder() {
+        alumno = alumnoService.getAlumnoByUsuario(usuario);
+        pedidoExistente = pedidoService.getPedidoHoy(alumno);
+
+        if (pedidoExistente != null){
+            if (pedidoExistente.getBocadillo().getTipo().equals(TipoBocadillo.frio)) {
+                bocadilloFrio.setStyle("-fx-background-color: #25A4F4; -fx-border-color: white; -fx-border-radius: 20; -fx-background-radius: 20");
+                labelBocadilloFrio.setStyle("-fx-text-fill: white");
+                descripcionBocadilloFrio.setStyle("-fx-text-fill: white");
+                precioFrio.setStyle("-fx-text-fill: white");
+            } else {
+                bocadilloCaliente.setStyle("-fx-background-color: #25A4F4; -fx-border-color: white; -fx-border-radius: 20; -fx-background-radius: 20");
+                labelBocadilloCaliente.setStyle("-fx-text-fill: white");
+                descripcionBocadilloCaliente.setStyle("-fx-text-fill: white");
+                precioCaliente.setStyle("-fx-text-fill: white");
+            }
+        }
+
         bocadilloFrio.setOnMouseClicked(mouseEvent -> seleccionarBocadillo("frio"));
         bocadilloCaliente.setOnMouseClicked(mouseEvent -> seleccionarBocadillo("caliente"));
 
@@ -73,13 +92,8 @@ public class ChooseSandwichController {
         String nombreBocadillo = tipo.equals("frio") ? labelBocadilloFrio.getText() : labelBocadilloCaliente.getText();
         Bocata bocadillo = bocataService.getBocataByName(nombreBocadillo);
         double precio = bocadillo.getPrecio();
-        Alumno alumno = alumnoService.getAlumnoByUsuario(usuario);
-
-        // Comprobamos si el alumno ya tiene un pedido
-        pedidoExistente = pedidoService.getPedidoHoy(alumno);
 
         if (pedidoExistente != null) {
-            // Si ya tiene un pedido, actualizamos el bocadillo
             if (pedidoExistente.getBocadillo().getTipo() == bocadillo.getTipo()) {
                 bottomLabel.setText(nombreBocadillo);
                 pedidoActual = pedidoExistente;
