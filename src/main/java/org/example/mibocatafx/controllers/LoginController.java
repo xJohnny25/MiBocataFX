@@ -3,6 +3,7 @@ package org.example.mibocatafx.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -41,8 +42,10 @@ public class LoginController {
                 e.printStackTrace();
             }
         } else {
-            //TODO -> poner alert
-            System.out.println("El usuario no se encuentra en la base de datos");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login");
+            alert.setContentText("Usuario no encontrado");
+            alert.show();
         }
     }
 
